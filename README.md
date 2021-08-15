@@ -1,4 +1,4 @@
-<strong>Файлы модуля располагаются в папке</strong> /bitrix/modules/<strong>perfcode.blankd7</strong>/
+<strong>Файлы модуля располагаются в папке:</strong> /bitrix/modules/<strong>perfcode.blankd7</strong>/
 
 <strong>Структура папки:</strong>
 
