@@ -4,3 +4,4 @@ $MESS['PERFCODE_BLANKD7_MODULE_NAME'] = 'Название модуля';
 $MESS['PERFCODE_BLANKD7_MODULE_DESCRIPTION'] = 'Описание модуля';
 $MESS['PERFCODE_BLANKD7_MODULE_INSTALL'] = 'Установка модуля';
 $MESS['PERFCODE_BLANKD7_MODULE_UNINSTALL'] = 'Удаление модуля';
+$MESS['PERFCODE_BLANKD7_RIGHT_DENIED'] = 'Доступ запрещён';

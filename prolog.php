@@ -1,3 +1,3 @@
 <?php
 
-define('ADMIN_MODULE_NAME', 'cn.cleandisk');
+define('ADMIN_MODULE_NAME', 'perfcode.blankd7');

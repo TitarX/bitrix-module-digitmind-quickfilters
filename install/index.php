@@ -1,22 +1,22 @@
 <?php
 
+use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\EventManager;
+use Bitrix\Main\ModuleManager;
 
 Loc::loadMessages(__FILE__);
 
 class perfcode_blankd7 extends CModule
 {
-    var $MODULE_ID = 'perfcode.blankd7';
-    var $MODULE_NAME;
-    var $MODULE_DESCRIPTION;
-    var $MODULE_VERSION;
-    var $MODULE_VERSION_DATE;
+    var $exclusionAdminFiles;
 
-    function perfcode_blankd7()
+    function __construct()
     {
+        $this->MODULE_ID = 'perfcode.blankd7';
         $this->MODULE_NAME = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NAME');
         $this->MODULE_DESCRIPTION = Loc::getMessage('PERFCODE_BLANKD7_MODULE_DESCRIPTION');
+
         $this->PARTNER_NAME = '';
         $this->PARTNER_URI = '';
 
@@ -31,6 +31,11 @@ class perfcode_blankd7 extends CModule
                 $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
             }
         }
+
+        $this->exclusionAdminFiles = array(
+            '..',
+            '.'
+        );
     }
 
     function DoInstall()
@@ -39,7 +44,7 @@ class perfcode_blankd7 extends CModule
 
         // Действия при установке модуля
 
-        $this->registerEvents();
+        $this->RegisterEvents();
         $this->InstallDB();
 
         RegisterModule($this->MODULE_ID);
@@ -53,7 +58,7 @@ class perfcode_blankd7 extends CModule
 
         // Действия при удалении модуля
 
-        $this->unRegisterEvents();
+        $this->UnRegisterEvents();
         $this->UnInstallDB();
 
         UnRegisterModule($this->MODULE_ID);
@@ -61,17 +66,33 @@ class perfcode_blankd7 extends CModule
         $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALL'), __DIR__ . '/unstep.php');
     }
 
+    //Определяем место размещения модуля
+    public function GetPath($notDocumentRoot = false)
+    {
+        if ($notDocumentRoot) {
+            return str_ireplace(Application::getDocumentRoot(), '', dirname(__DIR__));
+        } else {
+            return dirname(__DIR__);
+        }
+    }
+
+    //Проверяем что система поддерживает D7
+    public function isVersionD7()
+    {
+        return CheckVersion(ModuleManager::getVersion('main'), '14.00.00');
+    }
+
     function InstallDB()
     {
-        return true;
+        //
     }
 
     function UnInstallDB()
     {
-        return true;
+        //
     }
 
-    private function registerEvents()
+    function RegisterEvents()
     {
         EventManager::getInstance()->registerEventHandler(
             'main',
@@ -83,7 +104,7 @@ class perfcode_blankd7 extends CModule
         );
     }
 
-    private function unRegisterEvents()
+    function UnRegisterEvents()
     {
         EventManager::getInstance()->unRegisterEventHandler(
             'main',
@@ -91,6 +112,16 @@ class perfcode_blankd7 extends CModule
             $this->MODULE_ID,
             'Perfcode\Blankd7\Events\MainEvents',
             'EpilogHandler'
+        );
+    }
+
+    function GetModuleRightList()
+    {
+        return array(
+            "reference_id" => array('D'),
+            "reference" => array(
+                '[D] ' . Loc::getMessage('ACADEMY_D7_DENIED')
+            )
         );
     }
 }
