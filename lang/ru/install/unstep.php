@@ -1,3 +1,3 @@
 <?php
 
-$MESS['NEWMODULE_MODULE_UNINSTALLED'] = 'Модуль успешно удалён';
+$MESS['PERFCODE_BLANKD7_MODULE_UNINSTALLED'] = 'Модуль успешно удалён';

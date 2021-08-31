@@ -120,7 +120,7 @@ class perfcode_blankd7 extends CModule
         return array(
             "reference_id" => array('D'),
             "reference" => array(
-                '[D] ' . Loc::getMessage('ACADEMY_D7_DENIED')
+                '[D] ' . Loc::getMessage('PERFCODE_BLANKD7_RIGHT_DENIED')
             )
         );
     }

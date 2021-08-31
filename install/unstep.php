@@ -8,4 +8,4 @@ use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-print CAdminMessage::ShowNote(Loc::getMessage('NEWMODULE_MODULE_UNINSTALLED'));
+print CAdminMessage::ShowNote(Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALLED'));
