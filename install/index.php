@@ -47,7 +47,7 @@ class perfcode_blankd7 extends CModule
         $this->RegisterEvents();
         $this->InstallDB();
 
-        RegisterModule($this->MODULE_ID);
+        ModuleManager::registerModule($this->MODULE_ID);
 
         $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_INSTALL'), __DIR__ . '/step.php');
     }
@@ -61,7 +61,7 @@ class perfcode_blankd7 extends CModule
         $this->UnRegisterEvents();
         $this->UnInstallDB();
 
-        UnRegisterModule($this->MODULE_ID);
+        ModuleManager::unRegisterModule($this->MODULE_ID);
 
         $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALL'), __DIR__ . '/unstep.php');
     }
