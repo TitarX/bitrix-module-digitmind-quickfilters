@@ -84,12 +84,12 @@ class perfcode_blankd7 extends CModule
 
     function InstallDB()
     {
-        //
+        return true;
     }
 
     function UnInstallDB()
     {
-        //
+        return true;
     }
 
     function RegisterEvents()
