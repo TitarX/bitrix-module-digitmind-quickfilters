@@ -4,6 +4,8 @@ use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
+use Bitrix\Main\Config\Option;
+use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
@@ -54,7 +56,9 @@ class perfcode_blankd7 extends CModule
         } elseif (!ModuleManager::isModuleInstalled('learning')) {
             $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_CURRENCY');
         } else {
-            // Действия при установке модуля
+            $documentRoot = Application::getDocumentRoot();
+            $this->copyFiles($documentRoot);
+            $this->createDirectories($documentRoot);
 
             $this->RegisterEvents();
             $this->InstallDB();
@@ -72,7 +76,8 @@ class perfcode_blankd7 extends CModule
 
         $errors = '';
 
-        // Действия при удалении модуля
+        $this->deleteFiles();
+        $this->deleteDirectories();
 
         $this->UnRegisterEvents();
         $this->UnInstallDB();
@@ -100,12 +105,65 @@ class perfcode_blankd7 extends CModule
 
     function InstallDB()
     {
-        return;
+        global $APPLICATION;
+        global $DB;
+        global $errors;
+
+        $documentRoot = Application::getDocumentRoot();
+        $errors = $DB->RunSQLBatch("{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/install.sql');
+        if (!empty($errors)) {
+            $APPLICATION->ThrowException(implode('. ', $errors));
+            return false;
+        }
+
+        return true;
     }
 
     function UnInstallDB()
     {
-        return;
+        global $APPLICATION;
+        global $DB;
+        global $errors;
+
+        $documentRoot = Application::getDocumentRoot();
+        $errors = $DB->RunSQLBatch("{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/uninstall.sql');
+        if (!empty($errors)) {
+            $APPLICATION->ThrowException(implode('. ', $errors));
+            return false;
+        }
+
+        return true;
+    }
+
+    private function copyFiles($documentRoot)
+    {
+        CopyDirFiles(__DIR__ . '/pages/admin/perfcode_blankd7_do.php', "{$documentRoot}/bitrix/admin/perfcode_blankd7_do.php", true, true, false);
+    }
+
+    private function deleteFiles()
+    {
+        DeleteDirFilesEx('/bitrix/admin/perfcode_blankd7_do.php');
+    }
+
+    private function createDirectories($documentRoot)
+    {
+        $uploadDirectoryName = Option::get('main', 'upload_dir');
+
+        $perfcodeDirectoryPath = "{$documentRoot}/{$uploadDirectoryName}/perfcode";
+        if (!Directory::isDirectoryExists($perfcodeDirectoryPath)) {
+            Directory::createDirectory($perfcodeDirectoryPath);
+        }
+
+        $priceupdateDirectoryPath = "{$perfcodeDirectoryPath}/blankd7";
+        if (!Directory::isDirectoryExists($priceupdateDirectoryPath)) {
+            Directory::createDirectory($priceupdateDirectoryPath);
+        }
+    }
+
+    private function deleteDirectories()
+    {
+        $uploadDirectoryPath = Option::get('main', 'upload_dir');
+        DeleteDirFilesEx("/{$uploadDirectoryPath}/perfcode/blankd7");
     }
 
     function RegisterEvents()
