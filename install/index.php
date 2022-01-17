@@ -41,13 +41,26 @@ class perfcode_blankd7 extends CModule
     function DoInstall()
     {
         global $APPLICATION;
+        global $errors;
 
-        // Действия при установке модуля
+        $errors = '';
 
-        $this->RegisterEvents();
-        $this->InstallDB();
+        if (!ModuleManager::isModuleInstalled('iblock')) {
+            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_IBLOCK');
+        } elseif (!ModuleManager::isModuleInstalled('sale')) {
+            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_SALE');
+        } elseif (!ModuleManager::isModuleInstalled('catalog')) {
+            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_CATALOG');
+        } elseif (!ModuleManager::isModuleInstalled('learning')) {
+            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_CURRENCY');
+        } else {
+            // Действия при установке модуля
 
-        ModuleManager::registerModule($this->MODULE_ID);
+            $this->RegisterEvents();
+            $this->InstallDB();
+
+            ModuleManager::registerModule($this->MODULE_ID);
+        }
 
         $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_INSTALL'), __DIR__ . '/step.php');
     }
@@ -55,6 +68,9 @@ class perfcode_blankd7 extends CModule
     function DoUninstall()
     {
         global $APPLICATION;
+        global $errors;
+
+        $errors = '';
 
         // Действия при удалении модуля
 
@@ -84,12 +100,12 @@ class perfcode_blankd7 extends CModule
 
     function InstallDB()
     {
-        return true;
+        return;
     }
 
     function UnInstallDB()
     {
-        return true;
+        return;
     }
 
     function RegisterEvents()
