@@ -48,13 +48,13 @@ class perfcode_blankd7 extends CModule
         $errors = '';
 
         if (!ModuleManager::isModuleInstalled('iblock')) {
-            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_IBLOCK');
+            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_IBLOCK');
         } elseif (!ModuleManager::isModuleInstalled('sale')) {
-            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_SALE');
+            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_SALE');
         } elseif (!ModuleManager::isModuleInstalled('catalog')) {
-            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_CATALOG');
-        } elseif (!ModuleManager::isModuleInstalled('learning')) {
-            $errors = Loc::getMessage('PERFCODE_PRICEUPDATE_MODULE_NOT_INSTALLED_CURRENCY');
+            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_CATALOG');
+        } elseif (!ModuleManager::isModuleInstalled('currency')) {
+            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_CURRENCY');
         } else {
             $documentRoot = Application::getDocumentRoot();
             $this->copyFiles($documentRoot);
@@ -137,7 +137,7 @@ class perfcode_blankd7 extends CModule
 
     private function copyFiles($documentRoot)
     {
-        CopyDirFiles(__DIR__ . '/pages/admin/perfcode_blankd7_do.php', "{$documentRoot}/bitrix/admin/perfcode_blankd7_do.php", true, true, false);
+        CopyDirFiles(__DIR__ . '/pages/admin/perfcode_blankd7_update.php', "{$documentRoot}/bitrix/admin/perfcode_blankd7_update.php", true, true, false);
 
         CopyDirFiles(__DIR__ . '/js', "{$documentRoot}/bitrix/js/{$this->MODULE_ID}", true, true, false);
         CopyDirFiles(__DIR__ . '/css', "{$documentRoot}/bitrix/css/{$this->MODULE_ID}", true, true, false);
@@ -146,7 +146,7 @@ class perfcode_blankd7 extends CModule
 
     private function deleteFiles()
     {
-        DeleteDirFilesEx('/bitrix/admin/perfcode_blankd7_do.php');
+        DeleteDirFilesEx('/bitrix/admin/perfcode_blankd7_update.php');
 
         DeleteDirFilesEx("/bitrix/js/{$this->MODULE_ID}");
         DeleteDirFilesEx("/bitrix/css/{$this->MODULE_ID}");
@@ -162,9 +162,9 @@ class perfcode_blankd7 extends CModule
             Directory::createDirectory($perfcodeDirectoryPath);
         }
 
-        $priceupdateDirectoryPath = "{$perfcodeDirectoryPath}/blankd7";
-        if (!Directory::isDirectoryExists($priceupdateDirectoryPath)) {
-            Directory::createDirectory($priceupdateDirectoryPath);
+        $blankd7DirectoryPath = "{$perfcodeDirectoryPath}/blankd7";
+        if (!Directory::isDirectoryExists($blankd7DirectoryPath)) {
+            Directory::createDirectory($blankd7DirectoryPath);
         }
     }
 
