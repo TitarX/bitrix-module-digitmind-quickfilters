@@ -44,7 +44,7 @@ class MiscHelper
         }
 
         \CAdminMessage::ShowMessage(
-            array(
+            [
                 'MESSAGE' => $message,
                 'DETAILS' => '' . '#PROGRESS_BAR#' . '',
                 'HTML' => true,
@@ -52,7 +52,7 @@ class MiscHelper
                 'PROGRESS_WIDTH' => '600',
                 'PROGRESS_TOTAL' => 100,
                 'PROGRESS_VALUE' => $progressValue
-            )
+            ]
         );
     }
 }

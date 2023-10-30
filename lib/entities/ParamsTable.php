@@ -2,7 +2,8 @@
 
 namespace Perfcode\Blankd7\Entities;
 
-use \Bitrix\Main\Entity;
+use Bitrix\Main\Entity;
+use Bitrix\Main\SystemException;
 
 class ParamsTable extends Entity\DataManager
 {
@@ -26,24 +27,24 @@ class ParamsTable extends Entity\DataManager
      * @static
      *
      * @return array Массив объектов, описывающих поля таблицы в базе данных
-     * @throws \Bitrix\Main\SystemException
+     * @throws SystemException
      */
     public static function getMap()
     {
-        return array(
+        return [
             new Entity\IntegerField(
                 'ID',
-                array(
+                [
                     'primary' => true,
                     'autocomplete' => true,
-                )
+                ]
             ),
             new Entity\TextField(
                 'VALUE',
-                array(
+                [
                     'default_value' => '',
-                )
+                ]
             )
-        );
+        ];
     }
 }

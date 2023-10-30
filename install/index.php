@@ -22,7 +22,7 @@ class perfcode_blankd7 extends CModule
         $this->PARTNER_NAME = '';
         $this->PARTNER_URI = '';
 
-        $arModuleVersion = array();
+        $arModuleVersion = [];
         include(__DIR__ . '/version.php');
         if (is_array($arModuleVersion)) {
             if (array_key_exists('VERSION', $arModuleVersion)) {
@@ -34,10 +34,10 @@ class perfcode_blankd7 extends CModule
             }
         }
 
-        $this->exclusionAdminFiles = array(
+        $this->exclusionAdminFiles = [
             '..',
             '.'
-        );
+        ];
     }
 
     function DoInstall()
@@ -66,7 +66,10 @@ class perfcode_blankd7 extends CModule
             ModuleManager::registerModule($this->MODULE_ID);
         }
 
-        $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_INSTALL'), __DIR__ . '/step.php');
+        $APPLICATION->IncludeAdminFile(
+            Loc::getMessage('PERFCODE_BLANKD7_MODULE_INSTALL'),
+            __DIR__ . '/step.php'
+        );
     }
 
     function DoUninstall()
@@ -84,7 +87,10 @@ class perfcode_blankd7 extends CModule
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
 
-        $APPLICATION->IncludeAdminFile(Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALL'), __DIR__ . '/unstep.php');
+        $APPLICATION->IncludeAdminFile(
+            Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALL'),
+            __DIR__ . '/unstep.php'
+        );
     }
 
     //Определяем место размещения модуля
@@ -110,7 +116,9 @@ class perfcode_blankd7 extends CModule
         global $errors;
 
         $documentRoot = Application::getDocumentRoot();
-        $errors = $DB->RunSQLBatch("{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/install.sql');
+        $errors = $DB->RunSQLBatch(
+            "{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/install.sql'
+        );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
             return false;
@@ -126,7 +134,9 @@ class perfcode_blankd7 extends CModule
         global $errors;
 
         $documentRoot = Application::getDocumentRoot();
-        $errors = $DB->RunSQLBatch("{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/uninstall.sql');
+        $errors = $DB->RunSQLBatch(
+            "{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/uninstall.sql'
+        );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
             return false;
@@ -137,7 +147,13 @@ class perfcode_blankd7 extends CModule
 
     private function copyFiles($documentRoot)
     {
-        CopyDirFiles(__DIR__ . '/pages/admin/perfcode_blankd7_update.php', "{$documentRoot}/bitrix/admin/perfcode_blankd7_update.php", true, true, false);
+        CopyDirFiles(
+            __DIR__ . '/pages/admin/perfcode_blankd7_update.php',
+            "{$documentRoot}/bitrix/admin/perfcode_blankd7_update.php",
+            true,
+            true,
+            false
+        );
 
         CopyDirFiles(__DIR__ . '/js', "{$documentRoot}/bitrix/js/{$this->MODULE_ID}", true, true, false);
         CopyDirFiles(__DIR__ . '/css', "{$documentRoot}/bitrix/css/{$this->MODULE_ID}", true, true, false);
@@ -199,11 +215,11 @@ class perfcode_blankd7 extends CModule
 
     function GetModuleRightList()
     {
-        return array(
-            "reference_id" => array('D'),
-            "reference" => array(
+        return [
+            "reference_id" => ['D'],
+            "reference" => [
                 '[D] ' . Loc::getMessage('PERFCODE_BLANKD7_RIGHT_DENIED')
-            )
-        );
+            ]
+        ];
     }
 }

@@ -27,11 +27,10 @@ if (empty($rsParamsCount) || !is_int($rsParamsCount)) {
 }
 
 CAdminFileDialog::ShowScript(
-    array
-    (
+    [
         'event' => 'OpenFileDialog',
-        'arResultDest' => array('ELEMENT_ID' => 'selected_file_path'),
-        'arPath' => array(),
+        'arResultDest' => ['ELEMENT_ID' => 'selected_file_path'],
+        'arPath' => [],
         'select' => 'F',
         'operation' => 'O',
         'showUploadTab' => true,
@@ -39,14 +38,14 @@ CAdminFileDialog::ShowScript(
         'fileFilter' => 'csv',
         'allowAllFiles' => false,
         'saveConfig' => true
-    )
+    ]
 );
 
 if ($request->isPost()) {
     if ($request->get('action') === 'checkfileexists') { // Проверка на существование выбранного файла
         $APPLICATION->RestartBuffer();
 
-        $result = array('result' => 'miss');
+        $result = ['result' => 'miss'];
         $phpInput = file_get_contents('php://input');
         $phpInput = json_decode($phpInput, true);
         if (!empty($phpInput['filepath'])) {
@@ -78,7 +77,7 @@ if ($request->isPost()) {
 
         $phpInput = serialize($phpInput);
 
-        $arrParams = array('VALUE' => $phpInput);
+        $arrParams = ['VALUE' => $phpInput];
 
         $updateResult = null;
         if (!empty($entryId)) {
@@ -86,7 +85,7 @@ if ($request->isPost()) {
         } else {
             $updateResult = ParamsTable::add($arrParams);
         }
-        $result = array();
+        $result = [];
         if (isset($updateResult) && $updateResult->isSuccess()) {
             $entryId = $updateResult->getId();
             $result['result'] = $entryId;
@@ -104,11 +103,11 @@ if ($request->isPost()) {
         $messageText = $request->getPost('text');
         $messageArgs = $request->getPost('args');
         if (!is_array($messageArgs)) {
-            $messageArgs = array();
+            $messageArgs = [];
         }
 
         $message = vsprintf(Loc::getMessage($messageText), $messageArgs);
-        \CAdminMessage::ShowMessage(array('MESSAGE' => $message, 'TYPE' => $messageType));
+        \CAdminMessage::ShowMessage(['MESSAGE' => $message, 'TYPE' => $messageType]);
 
         exit();
     }
@@ -117,11 +116,13 @@ if ($request->isPost()) {
 $entryId = '';
 $filePath = '';
 if (!empty($rsParamsCount)) {
-    $dbResult = ParamsTable::getList(array(
-        'select' => array('ID', 'VALUE'),
-        'order' => array('ID' => 'desc'),
-        'limit' => 1
-    ));
+    $dbResult = ParamsTable::getList(
+        [
+            'select' => ['ID', 'VALUE'],
+            'order' => ['ID' => 'desc'],
+            'limit' => 1
+        ]
+    );
     if ($arrResult = $dbResult->fetch()) {
         $entryId = $arrResult['ID'];
 
