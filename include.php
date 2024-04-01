@@ -4,9 +4,11 @@ use Bitrix\Main\Loader;
 
 // При правильном именовании, классы подключаются автоматически. Имена файлов классов должны быть в нижнем регистре.
 Loader::registerAutoloadClasses(
-    'perfcode.blankd7',
+    'digitmind.sample',
     [
-        'Perfcode\Blankd7\Events\MainEvents' => 'lib/events/MainEvents.php',
-        'Perfcode\Blankd7\Helpers\MiscHelper' => 'lib/helpers/MiscHelper.php'
+        'DigitMind\Sample\Events\MainEvents' => 'lib/events/MainEvents.php',
+        'DigitMind\Sample\Entities\OptionsTable' => 'lib/entities/OptionsTable.php',
+        'DigitMind\Sample\Helpers\MiscHelper' => 'lib/helpers/MiscHelper.php',
+        'DigitMind\Sample\Workers\Worker' => 'lib/workers/Worker.php'
     ]
 );

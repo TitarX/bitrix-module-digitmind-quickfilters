@@ -1,6 +1,7 @@
-create table if not exists perfcode_blankd7_params
+create table if not exists digitmind_sample_options
 (
-    ID int not null auto_increment,
-    VALUE text not null default '',
+    `ID` int not null auto_increment,
+    `CODE` varchar(255) not null,
+    `VALUE` text not null,
     primary key (ID)
 );

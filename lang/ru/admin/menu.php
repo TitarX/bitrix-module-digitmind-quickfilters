@@ -1,6 +1,6 @@
 <?php
 
-$MESS['PERFCODE_BLANKD7_MENU_TEXT'] = 'Обновление цен';
-$MESS['PERFCODE_BLANKD7_MENU_TITLE'] = 'Обновление цен';
-$MESS['PERFCODE_BLANKD7_SUBMENU_TEXT'] = 'Из CSV, по названию товара';
-$MESS['PERFCODE_BLANKD7_SUBMENU_TITLE'] = 'Из CSV, по названию товара';
+$MESS['DIGITMIND_SAMPLE_MENU_TEXT'] = 'Sample module';
+$MESS['DIGITMIND_SAMPLE_MENU_TITLE'] = 'Sample module';
+$MESS['DIGITMIND_SAMPLE_MENU_WORKER_TEXT'] = 'Do work';
+$MESS['DIGITMIND_SAMPLE_MENU_WORKER_TITLE'] = 'Do work';

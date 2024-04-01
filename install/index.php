@@ -9,15 +9,15 @@ use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
-class perfcode_blankd7 extends CModule
+class digitmind_sample extends CModule
 {
     var $exclusionAdminFiles;
 
     function __construct()
     {
-        $this->MODULE_ID = 'perfcode.blankd7';
-        $this->MODULE_NAME = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NAME');
-        $this->MODULE_DESCRIPTION = Loc::getMessage('PERFCODE_BLANKD7_MODULE_DESCRIPTION');
+        $this->MODULE_ID = 'digitmind.sample';
+        $this->MODULE_NAME = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_NAME');
+        $this->MODULE_DESCRIPTION = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_DESCRIPTION');
 
         $this->PARTNER_NAME = '';
         $this->PARTNER_URI = '';
@@ -48,13 +48,7 @@ class perfcode_blankd7 extends CModule
         $errors = '';
 
         if (!ModuleManager::isModuleInstalled('iblock')) {
-            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_IBLOCK');
-        } elseif (!ModuleManager::isModuleInstalled('sale')) {
-            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_SALE');
-        } elseif (!ModuleManager::isModuleInstalled('catalog')) {
-            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_CATALOG');
-        } elseif (!ModuleManager::isModuleInstalled('currency')) {
-            $errors = Loc::getMessage('PERFCODE_BLANKD7_MODULE_NOT_INSTALLED_CURRENCY');
+            $errors = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_NOT_INSTALLED_IBLOCK');
         } else {
             $documentRoot = Application::getDocumentRoot();
             $this->copyFiles($documentRoot);
@@ -67,7 +61,7 @@ class perfcode_blankd7 extends CModule
         }
 
         $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('PERFCODE_BLANKD7_MODULE_INSTALL'),
+            Loc::getMessage('DIGITMIND_SAMPLE_MODULE_INSTALL'),
             __DIR__ . '/step.php'
         );
     }
@@ -88,7 +82,7 @@ class perfcode_blankd7 extends CModule
         ModuleManager::unRegisterModule($this->MODULE_ID);
 
         $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('PERFCODE_BLANKD7_MODULE_UNINSTALL'),
+            Loc::getMessage('DIGITMIND_SAMPLE_MODULE_UNINSTALL'),
             __DIR__ . '/unstep.php'
         );
     }
@@ -117,7 +111,7 @@ class perfcode_blankd7 extends CModule
 
         $documentRoot = Application::getDocumentRoot();
         $errors = $DB->RunSQLBatch(
-            "{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/install.sql'
+            "{$documentRoot}/bitrix/modules/digitmind.sample/install/db/" . strtolower($DB->type) . '/install.sql'
         );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
@@ -135,7 +129,7 @@ class perfcode_blankd7 extends CModule
 
         $documentRoot = Application::getDocumentRoot();
         $errors = $DB->RunSQLBatch(
-            "{$documentRoot}/bitrix/modules/perfcode.blankd7/install/db/" . strtolower($DB->type) . '/uninstall.sql'
+            "{$documentRoot}/bitrix/modules/digitmind.sample/install/db/" . strtolower($DB->type) . '/uninstall.sql'
         );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
@@ -148,8 +142,8 @@ class perfcode_blankd7 extends CModule
     private function copyFiles($documentRoot)
     {
         CopyDirFiles(
-            __DIR__ . '/pages/admin/perfcode_blankd7_update.php',
-            "{$documentRoot}/bitrix/admin/perfcode_blankd7_update.php",
+            __DIR__ . '/pages/admin/digitmind_sample_worker.php',
+            "{$documentRoot}/bitrix/admin/digitmind_sample_worker.php",
             true,
             true,
             false
@@ -162,7 +156,7 @@ class perfcode_blankd7 extends CModule
 
     private function deleteFiles()
     {
-        DeleteDirFilesEx('/bitrix/admin/perfcode_blankd7_update.php');
+        DeleteDirFilesEx('/bitrix/admin/digitmind_sample_worker.php');
 
         DeleteDirFilesEx("/bitrix/js/{$this->MODULE_ID}");
         DeleteDirFilesEx("/bitrix/css/{$this->MODULE_ID}");
@@ -173,21 +167,16 @@ class perfcode_blankd7 extends CModule
     {
         $uploadDirectoryName = Option::get('main', 'upload_dir');
 
-        $perfcodeDirectoryPath = "{$documentRoot}/{$uploadDirectoryName}/perfcode";
-        if (!Directory::isDirectoryExists($perfcodeDirectoryPath)) {
-            Directory::createDirectory($perfcodeDirectoryPath);
-        }
-
-        $blankd7DirectoryPath = "{$perfcodeDirectoryPath}/blankd7";
-        if (!Directory::isDirectoryExists($blankd7DirectoryPath)) {
-            Directory::createDirectory($blankd7DirectoryPath);
+        $digitmindDirectoryPath = "{$documentRoot}/{$uploadDirectoryName}/{$this->MODULE_ID}";
+        if (!Directory::isDirectoryExists($digitmindDirectoryPath)) {
+            Directory::createDirectory($digitmindDirectoryPath);
         }
     }
 
     private function deleteDirectories()
     {
         $uploadDirectoryPath = Option::get('main', 'upload_dir');
-        DeleteDirFilesEx("/{$uploadDirectoryPath}/perfcode/blankd7");
+        DeleteDirFilesEx("/{$uploadDirectoryPath}/{$this->MODULE_ID}");
     }
 
     function RegisterEvents()
@@ -196,7 +185,7 @@ class perfcode_blankd7 extends CModule
             'main',
             'OnEpilog',
             $this->MODULE_ID,
-            'Perfcode\Blankd7\Events\MainEvents',
+            'DigitMind\Sample\Events\MainEvents',
             'EpilogHandler',
             1000
         );
@@ -208,7 +197,7 @@ class perfcode_blankd7 extends CModule
             'main',
             'OnEpilog',
             $this->MODULE_ID,
-            'Perfcode\Blankd7\Events\MainEvents',
+            'DigitMind\Sample\Events\MainEvents',
             'EpilogHandler'
         );
     }
@@ -218,7 +207,7 @@ class perfcode_blankd7 extends CModule
         return [
             "reference_id" => ['D'],
             "reference" => [
-                '[D] ' . Loc::getMessage('PERFCODE_BLANKD7_RIGHT_DENIED')
+                '[D] ' . Loc::getMessage('DIGITMIND_SAMPLE_RIGHT_DENIED')
             ]
         ];
     }

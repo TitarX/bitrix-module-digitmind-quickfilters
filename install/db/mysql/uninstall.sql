@@ -1,1 +1,1 @@
-drop table if exists perfcode_blankd7_params;
+drop table if exists digitmind_sample_options;

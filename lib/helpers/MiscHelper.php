@@ -1,12 +1,15 @@
 <?php
 
-namespace Perfcode\Blankd7\Helpers;
+namespace DigitMind\Sample\Helpers;
+
+use Bitrix\Main\Application;
+use Bitrix\Main\Config\Option;
 
 class MiscHelper
 {
     public static function getModuleId()
     {
-        return 'perfcode.blankd7';
+        return 'digitmind.sample';
     }
 
     public static function getAssetsPath($type)
@@ -54,5 +57,28 @@ class MiscHelper
                 'PROGRESS_VALUE' => $progressValue
             ]
         );
+    }
+
+    public static function getModuleUploadDirPath()
+    {
+        $uploadDirectoryName = Option::get('main', 'upload_dir');
+        $moduleId = GetModuleID(__FILE__);
+
+        return "/{$uploadDirectoryName}/{$moduleId}";
+    }
+
+    public static function getModuleUploadDirFullPath()
+    {
+        $documentRoot = Application::getDocumentRoot();
+        $moduleUploadDirPath = self::getModuleUploadDirPath();
+
+        return "{$documentRoot}{$moduleUploadDirPath}";
+    }
+
+    public static function removeGetParameters($urlString)
+    {
+        $urlString = trim($urlString);
+        list($path) = explode('?', $urlString);
+        return $path;
     }
 }

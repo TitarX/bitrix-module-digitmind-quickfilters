@@ -1,3 +1,3 @@
 <?php
 
-define('ADMIN_MODULE_NAME', 'perfcode.blankd7');
+define('ADMIN_MODULE_NAME', 'digitmind.sample');

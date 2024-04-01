@@ -1,10 +1,10 @@
 <?php
 
-namespace Perfcode\Blankd7\Events;
+namespace DigitMind\Sample\Events;
 
 use Bitrix\Main\Loader;
 
-Loader::includeModule('perfcode.blankd7');
+Loader::includeModule('digitmind.sample');
 
 class MainEvents
 {
