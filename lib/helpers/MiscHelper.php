@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitMind\Sample\Helpers;
+namespace DigitMind\RedirectUrlWriter\Helpers;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
@@ -9,7 +9,7 @@ class MiscHelper
 {
     public static function getModuleId()
     {
-        return 'digitmind.sample';
+        return 'digitmind.redirecturlwriter';
     }
 
     public static function getAssetsPath($type)
@@ -80,5 +80,86 @@ class MiscHelper
         $urlString = trim($urlString);
         list($path) = explode('?', $urlString);
         return $path;
+    }
+
+    /**
+     * Проверка URL на ответ с кодом 200
+     *
+     * @param $url
+     * @param $includeRedirects - С учётом редиректов
+     *
+     * @return ?bool
+     */
+    public static function checkUrl200($url, $includeRedirects = true)
+    {
+        $curl = curl_init($url);
+
+        curl_setopt_array($curl, [
+            CURLOPT_FOLLOWLOCATION => $includeRedirects,
+            CURLOPT_NOBODY => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false
+        ]);
+
+        $curlExecResult = curl_exec($curl);
+
+        curl_close($curl);
+
+        if ($curlExecResult !== false) {
+            $curlInfo = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            if ($curlInfo == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Содержит ли строка заданные подстроки
+     *
+     * @param $text
+     * @param $textPieces
+     *
+     * @return bool
+     */
+    public static function checkStringContains($text, $textPieces)
+    {
+        $result = false;
+
+        foreach ($textPieces as $textPiece) {
+            if (stripos($text, $textPiece) !== false) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Содержит ли строка заданные подстроки по регулярным выражениям
+     *
+     * @param $text
+     * @param $textPieces
+     *
+     * @return bool
+     */
+    public static function checkStringContainsRegex($text, $textPieces)
+    {
+        $result = false;
+
+        foreach ($textPieces as $textPiece) {
+            if (preg_match($textPiece, $text) === 1) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
     }
 }
