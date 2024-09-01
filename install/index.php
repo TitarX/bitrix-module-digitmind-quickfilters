@@ -87,7 +87,7 @@ class digitmind_sample extends CModule
         );
     }
 
-    //Определяем место размещения модуля
+    // Определяем место размещения модуля
     public function GetPath($notDocumentRoot = false)
     {
         if ($notDocumentRoot) {
@@ -97,7 +97,7 @@ class digitmind_sample extends CModule
         }
     }
 
-    //Проверяем что система поддерживает D7
+    // Проверяем что система поддерживает D7
     public function isVersionD7()
     {
         return CheckVersion(ModuleManager::getVersion('main'), '14.00.00');

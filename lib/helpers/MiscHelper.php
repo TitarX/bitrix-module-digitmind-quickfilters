@@ -4,6 +4,7 @@ namespace DigitMind\Sample\Helpers;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
+use CAdminMessage;
 
 class MiscHelper
 {
@@ -46,10 +47,10 @@ class MiscHelper
             $progressValue = ($total - $value) / $total1;
         }
 
-        \CAdminMessage::ShowMessage(
+        CAdminMessage::ShowMessage(
             [
                 'MESSAGE' => $message,
-                'DETAILS' => '' . '#PROGRESS_BAR#' . '',
+                'DETAILS' => '#PROGRESS_BAR#',
                 'HTML' => true,
                 'TYPE' => 'PROGRESS',
                 'PROGRESS_WIDTH' => '600',

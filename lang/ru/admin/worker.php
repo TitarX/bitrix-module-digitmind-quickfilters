@@ -2,12 +2,12 @@
 $MESS['DIGITMIND_SAMPLE_DOWORK_FILEPATH_PLACEHOLDER_TITLE'] = 'Путь к файлу';
 $MESS['DIGITMIND_SAMPLE_DOWORK_FILE_FIELDSET_LEGEND'] = 'Файл';
 $MESS['DIGITMIND_SAMPLE_DOWORK_FILE_START_BUTTON'] = 'Старт';
-$MESS['DIGITMIND_SAMPLE_DOWORK_FILE_MISS'] = 'Не указан файл, либо файл не существует.';
+$MESS['DIGITMIND_SAMPLE_DOWORK_FILE_MISS'] = 'Не указан файл, либо файл не существует';
 
-$MESS['DIGITMIND_SAMPLE_DOWORK_PARAMS_ERROR'] = 'Не удалось сохранить параметры.';
-$MESS['DIGITMIND_SAMPLE_DOWORK_FILENOTFOUND_ERROR'] = 'Файл не найден.';
+$MESS['DIGITMIND_SAMPLE_DOWORK_PARAMS_ERROR'] = 'Не удалось сохранить параметры';
+$MESS['DIGITMIND_SAMPLE_DOWORK_FILENOTFOUND_ERROR'] = 'Файл не найден';
 
-$MESS['DIGITMIND_SAMPLE_DOWORK_SUCCESS'] = 'Выполнено успешно.';
+$MESS['DIGITMIND_SAMPLE_DOWORK_SUCCESS'] = 'Выполнено успешно';
 
 $MESS['DIGITMIND_SAMPLE_DOWORK_PAGE_TITLE'] = 'Заголовок страницы воркера';
-$MESS['DIGITMIND_SAMPLE_DOWORK_PAGE_DESCRIPTION'] = 'Описание страницы воркера.';
+$MESS['DIGITMIND_SAMPLE_DOWORK_PAGE_DESCRIPTION'] = 'Описание страницы воркера';
