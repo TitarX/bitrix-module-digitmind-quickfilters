@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitMind\RedirectUrlWriter\Helpers;
+namespace DigitMind\Sample\Helpers;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
@@ -9,7 +9,7 @@ class MiscHelper
 {
     public static function getModuleId()
     {
-        return 'digitmind.redirecturlwriter';
+        return 'digitmind.sample';
     }
 
     public static function getAssetsPath($type)
