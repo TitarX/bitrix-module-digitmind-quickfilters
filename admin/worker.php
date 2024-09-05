@@ -128,7 +128,7 @@ if ($request->isPost()) {
         }
 
         $message = vsprintf(Loc::getMessage($messageText), $messageArgs);
-        \CAdminMessage::ShowMessage(['MESSAGE' => $message, 'TYPE' => $messageType]);
+        CAdminMessage::ShowMessage(['MESSAGE' => $message, 'TYPE' => $messageType]);
 
         exit();
     }
