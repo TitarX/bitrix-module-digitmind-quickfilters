@@ -1,6 +1,6 @@
 # Заготовка для создания модуля БУС D7
 
-digitmind.sample
+digitmind.sample<br>
 Опции с выбором файла
 
 --------
