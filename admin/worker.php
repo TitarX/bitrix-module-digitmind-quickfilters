@@ -6,7 +6,7 @@ use Bitrix\Main\Page\Asset;
 use Bitrix\Main\Application;
 use Bitrix\Main\IO\File;
 use DigitMind\Sample\Helpers\MiscHelper;
-use DigitMind\Sample\Entities\OptionsTable;
+use DigitMind\Sample\Entities\OptionTable;
 use DigitMind\Sample\Workers\Worker;
 
 define('OPT_NAME_RESULT_FILE_PATH', 'RESULT_FILE_PATH');
@@ -28,7 +28,7 @@ Asset::getInstance()->addJs(MiscHelper::getAssetsPath('js') . '/main.js');
 Asset::getInstance()->addJs(MiscHelper::getAssetsPath('js') . '/worker.js');
 
 $request = Application::getInstance()->getContext()->getRequest();
-$options = OptionsTable::getData();
+$options = OptionTable::getData();
 
 CAdminFileDialog::ShowScript(
     [
@@ -84,9 +84,9 @@ if ($request->isPost()) {
 
             $workResult = null;
             if (!empty($options[OPT_NAME_RESULT_FILE_PATH]['ID'])) {
-                $workResult = OptionsTable::update($options[OPT_NAME_RESULT_FILE_PATH]['ID'], $arrParams);
+                $workResult = OptionTable::update($options[OPT_NAME_RESULT_FILE_PATH]['ID'], $arrParams);
             } else {
-                $workResult = OptionsTable::add($arrParams);
+                $workResult = OptionTable::add($arrParams);
             }
             $result = [];
             if (isset($workResult) && $workResult->isSuccess()) {
@@ -135,7 +135,7 @@ if ($request->isPost()) {
 }
 
 $filePath = '';
-$options = OptionsTable::getData();
+$options = OptionTable::getData();
 if (!empty($options[OPT_NAME_RESULT_FILE_PATH]['VALUE'])) {
     $filePath = $options[OPT_NAME_RESULT_FILE_PATH]['VALUE'];
 }

@@ -7,7 +7,7 @@ Loader::registerAutoloadClasses(
     'digitmind.sample',
     [
         'DigitMind\Sample\Events\MainEvents' => 'lib/events/MainEvents.php',
-        'DigitMind\Sample\Entities\OptionsTable' => 'lib/entities/OptionsTable.php',
+        'DigitMind\Sample\Entities\OptionTable' => 'lib/entities/OptionTable.php',
         'DigitMind\Sample\Helpers\MiscHelper' => 'lib/helpers/MiscHelper.php',
         'DigitMind\Sample\Workers\Worker' => 'lib/workers/Worker.php'
     ]

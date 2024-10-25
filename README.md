@@ -89,15 +89,3 @@ digitmind.sample<br>
 * **.settings.php** - Файл настроек модуля, описывающий настройки модуля, которые можно прочитать через \Bitrix\Main\Config\Configuration::getInstance($module).
 
 --------
-
-digitmind.sample\
-Sample\
-digitmind_sample_options\
-digitmind_sample_menu\
-digitmind_sample_worker\
-DIGITMIND_SAMPLE_DOWORK_\
-SAMPLE_\
-RESULT_FILE_PATH\
-dowork
-
---------

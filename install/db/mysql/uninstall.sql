@@ -1,1 +1,1 @@
-drop table if exists digitmind_sample_options;
+drop table if exists digitmind_sample_option;
