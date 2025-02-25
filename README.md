@@ -1,6 +1,5 @@
-# Заготовка для создания модуля БУС D7
+# Быстрые фильтры
 
-digitmind.multioptions<br>
-Опции с несколькими значениями
+digitmind.quickfilters
 
-bitrix-module-blankd7-multioptions
+bitrix-module-digitmind-quickfilters
