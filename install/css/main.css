@@ -1,0 +1,12 @@
+.wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#work-info-spinner {
+    width: 50%;
+}
+
+.email-techappeal-input {
+    display: block !important;
+}

@@ -1,0 +1,4 @@
+<?php
+
+$MESS['DIGITMIND_MULTIOPTIONS_STATISTICS_PAGE_TITLE'] = 'Статистика постановки задач';
+$MESS['DIGITMIND_MULTIOPTIONS_STATISTICS_PAGE_DESCRIPTION'] = 'Статистика постановки задач';

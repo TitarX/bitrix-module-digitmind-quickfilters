@@ -1,0 +1,9 @@
+# IDE
+.idea/
+.fleet/
+.vscode/
+nbproject/
+.phpintel/
+.project
+
+*.txt
