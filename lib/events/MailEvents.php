@@ -1,11 +1,11 @@
 <?php
 
-namespace DigitMind\MultiOptions\Events;
+namespace DigitMind\QuickFilters\Events;
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Event;
 
-Loader::includeModule('digitmind.multioptions');
+Loader::includeModule('digitmind.quickfilters');
 
 class MailEvents
 {

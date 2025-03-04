@@ -4,18 +4,18 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Page\Asset;
 use Bitrix\Main\Application;
-use DigitMind\MultiOptions\Helpers\MiscHelper;
-use DigitMind\MultiOptions\Entities\OptionTable;
+use DigitMind\QuickFilters\Helpers\MiscHelper;
+use DigitMind\QuickFilters\Entities\OptionTable;
 
 define('OPT_MAIL_RULES_FOR_TASKS', 'MAIL_RULES_FOR_TASKS');
 
 Loc::loadMessages(__FILE__);
-Loader::includeModule('digitmind.multioptions');
+Loader::includeModule('digitmind.quickfilters');
 
 @set_time_limit(360);
 
 global $APPLICATION;
-$APPLICATION->SetTitle(Loc::getMessage('DIGITMIND_MULTIOPTIONS_STATISTICS_PAGE_TITLE'));
+$APPLICATION->SetTitle(Loc::getMessage('DIGITMIND_QUICKFILTERS_STATISTICS_PAGE_TITLE'));
 
 $mainCss = MiscHelper::getAssetsPath('css') . '/main.css';
 Asset::getInstance()->addString('<link href="' . $mainCss . '" rel="stylesheet" type="text/css">');

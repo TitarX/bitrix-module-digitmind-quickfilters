@@ -4,19 +4,19 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Page\Asset;
 use Bitrix\Main\Application;
-use DigitMind\MultiOptions\Helpers\MiscHelper;
-use DigitMind\MultiOptions\Entities\OptionTable;
+use DigitMind\QuickFilters\Helpers\MiscHelper;
+use DigitMind\QuickFilters\Entities\OptionTable;
 
 define('OPT_TECHAPPEAL_TOADDRESS', 'TECHAPPEAL_TOADDRESS');
 define('OPT_TECHAPPEAL_SUBJECT', 'TECHAPPEAL_SUBJECT');
 
 Loc::loadMessages(__FILE__);
-Loader::includeModule('digitmind.multioptions');
+Loader::includeModule('digitmind.quickfilters');
 
 @set_time_limit(360);
 
 global $APPLICATION;
-$APPLICATION->SetTitle(Loc::getMessage('DIGITMIND_MULTIOPTIONS_RULES_PAGE_TITLE'));
+$APPLICATION->SetTitle(Loc::getMessage('DIGITMIND_QUICKFILTERS_RULES_PAGE_TITLE'));
 
 $mainCss = MiscHelper::getAssetsPath('css') . '/main.css';
 Asset::getInstance()->addString('<link href="' . $mainCss . '" rel="stylesheet" type="text/css">');
@@ -116,28 +116,28 @@ if (!empty($options[OPT_TECHAPPEAL_SUBJECT]['VALUE'])) {
 
 <div class="wrapper">
     <fieldset>
-        <legend><?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_TECHAPPEAL_TOADDRESS') ?></legend>
+        <legend><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_TECHAPPEAL_TOADDRESS') ?></legend>
         <div id="email-techappeal-toaddress-wrapper">
             <?php foreach ($techappealToaddressRules as $ruleValue): ?>
                 <input type="text" class="email-techappeal-input techappeal_toaddress" value="<?= trim($ruleValue) ?>" size="64"
-                       placeholder="<?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
+                       placeholder="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
             <?php endforeach; ?>
             <input type="text" value="" class="email-techappeal-input techappeal_toaddress"
-                   size="64" placeholder="<?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
+                   size="64" placeholder="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
         </div>
     </fieldset>
 </div>
 
 <div class="wrapper">
     <fieldset>
-        <legend><?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_TECHAPPEAL_SUBJECT') ?></legend>
+        <legend><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_TECHAPPEAL_SUBJECT') ?></legend>
         <div id="email-techappeal-subject-wrapper">
             <?php foreach ($techappealSubjectRules as $ruleValue): ?>
                 <input type="text" class="email-techappeal-input techappeal_subject" value="<?= trim($ruleValue) ?>" size="64"
-                       placeholder="<?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
+                       placeholder="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
             <?php endforeach; ?>
             <input type="text" value="" class="email-techappeal-input techappeal_subject"
-                   size="64" placeholder="<?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
+                   size="64" placeholder="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_SUBSTR_OR_REGEX_PLACEHOLDER') ?>">
         </div>
     </fieldset>
 </div>
@@ -146,7 +146,7 @@ if (!empty($options[OPT_TECHAPPEAL_SUBJECT]['VALUE'])) {
 
 <div class="wrapper">
     <div id="work-info-spinner"></div>
-    <button id='save-params-button'><?= Loc::getMessage('DIGITMIND_MULTIOPTIONS_RULES_SAVE_BUTTON') ?></button>
+    <button id='save-params-button'><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_RULES_SAVE_BUTTON') ?></button>
 </div>
 
 <div class="wrapper">

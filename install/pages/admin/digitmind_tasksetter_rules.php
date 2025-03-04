@@ -4,7 +4,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_ad
 
 use Bitrix\Main\Loader;
 
-$includeFilePath = Loader::getLocal('modules/digitmind.multioptions/admin/rules.php');
+$includeFilePath = Loader::getLocal('modules/digitmind.quickfilters/admin/rules.php');
 if ($includeFilePath !== false) {
     require_once $includeFilePath;
 }

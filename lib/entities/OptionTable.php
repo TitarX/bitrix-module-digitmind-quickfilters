@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitMind\MultiOptions\Entities;
+namespace DigitMind\QuickFilters\Entities;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
@@ -21,7 +21,7 @@ class OptionTable extends Entity\DataManager
      */
     public static function getTableName(): string
     {
-        return 'digitmind_multioptions_option';
+        return 'digitmind_quickfilters_option';
     }
 
     /**

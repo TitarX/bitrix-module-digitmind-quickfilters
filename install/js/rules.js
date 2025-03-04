@@ -72,7 +72,7 @@ function saveParams(url, params, waitSpinner) {
         (data) => {
             if (data.result) {
                 if (data.result === 'fail') {
-                    showMessage(url, 'ERROR', 'DIGITMIND_MULTIOPTIONS_SAVEPARAMS_ERROR', {}, 'work-info');
+                    showMessage(url, 'ERROR', 'DIGITMIND_QUICKFILTERS_SAVEPARAMS_ERROR', {}, 'work-info');
                     BX.closeWait('work-info-spinner', waitSpinner);
                 } else {
                     doWork(url, params, waitSpinner);
@@ -90,6 +90,6 @@ function saveParams(url, params, waitSpinner) {
 }
 
 function doWork(url, params, waitSpinner) {
-    showMessage(url, 'OK', 'DIGITMIND_MULTIOPTIONS_DOWORK_SUCCESS', {}, 'work-info');
+    showMessage(url, 'OK', 'DIGITMIND_QUICKFILTERS_DOWORK_SUCCESS', {}, 'work-info');
     BX.closeWait('work-info-spinner', waitSpinner);
 }
