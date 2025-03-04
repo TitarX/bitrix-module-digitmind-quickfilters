@@ -47,10 +47,8 @@ class digitmind_quickfilters extends CModule
 
         $errors = '';
 
-        if (!ModuleManager::isModuleInstalled('mail')) {
-            $errors = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_MAIL');
-        } elseif (!ModuleManager::isModuleInstalled('deha.sd')) {
-            $errors = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_DEHA_SD');
+        if (!ModuleManager::isModuleInstalled('iblock')) {
+            $errors = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_IBLOCK');
         } else {
             $documentRoot = Application::getDocumentRoot();
             $this->copyFiles($documentRoot);

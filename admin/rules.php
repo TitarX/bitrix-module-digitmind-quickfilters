@@ -101,7 +101,7 @@ if ($request->isPost()) {
     }
 }
 
-$options = OptionsTable::getData();
+$options = OptionTable::getData();
 
 $techappealToaddressRules = [];
 if (!empty($options[OPT_TECHAPPEAL_TOADDRESS]['VALUE'])) {
