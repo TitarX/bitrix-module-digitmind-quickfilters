@@ -190,11 +190,11 @@ class digitmind_quickfilters extends CModule
     function RegisterEvents()
     {
         EventManager::getInstance()->registerEventHandler(
-            'mail',
-            'onMailMessageNew',
+            'main',
+            'OnPageStart',
             $this->MODULE_ID,
-            'DigitMind\QuickFilters\Events\MailEvents',
-            'onMailMessageNew',
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'checkQuickFilter',
             1000
         );
     }
@@ -202,11 +202,11 @@ class digitmind_quickfilters extends CModule
     function UnRegisterEvents()
     {
         EventManager::getInstance()->unRegisterEventHandler(
-            'mail',
-            'onMailMessageNew',
+            'main',
+            'OnPageStart',
             $this->MODULE_ID,
-            'DigitMind\QuickFilters\Events\MailEvents',
-            'onMailMessageNew'
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'checkQuickFilter'
         );
     }
 
