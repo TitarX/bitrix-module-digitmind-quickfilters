@@ -3,6 +3,7 @@
 namespace DigitMind\QuickFilters\Events;
 
 use Bitrix\Main\Loader;
+use CHTTP;
 
 Loader::includeModule('digitmind.quickfilters');
 
@@ -10,11 +11,11 @@ class PageEvents
 {
     public static function checkQuickFilter()
     {
-        // file_put_contents(__DIR__ . '/try.txt', print_r($_SERVER['REQUEST_URI'], true), FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
+        if ($_SERVER['REQUEST_URI'] == '/123') {
+            $newContentUrl = 'https://bx.site/catalog/sportswear/filter/price-base-from-2428-to-2636/color_ref-is-white/sizes_clothes-is-a11f96c3b88d222460d9796067d28b0c/apply/';
 
-        if ($_SERVER['REQUEST_URI'] == '/catalog/t-shirts/') {
-            readfile('https://bx.site/catalog/sportswear/');
+            CHTTP::SetStatus('200 OK');
+            readfile($newContentUrl);
             exit();
         }
     }
