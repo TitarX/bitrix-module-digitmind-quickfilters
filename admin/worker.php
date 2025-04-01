@@ -9,7 +9,7 @@ use DigitMind\Sample\Helpers\MiscHelper;
 use DigitMind\Sample\Entities\OptionTable;
 use DigitMind\Sample\Workers\Worker;
 
-define('OPT_NAME_RESULT_FILE_PATH', 'RESULT_FILE_PATH');
+define('OPT_RESULT_FILE_PATH', 'RESULT_FILE_PATH');
 
 Loc::loadMessages(__FILE__);
 Loader::includeModule('digitmind.sample');
@@ -29,6 +29,35 @@ Asset::getInstance()->addJs(MiscHelper::getAssetsPath('js') . '/worker.js');
 
 $request = Application::getInstance()->getContext()->getRequest();
 $options = OptionTable::getData();
+$filePath = $options[OPT_RESULT_FILE_PATH]['VALUE'] ?? '';
+
+if ($request->isPost()) {
+    // $newFilePath = $request->get('filepath');
+    // $newFilePath = trim($newFilePath);
+    //
+    // $arrParams = [
+    //     'CODE' => OPT_RESULT_FILE_PATH,
+    //     'VALUE' => $newFilePath
+    // ];
+    //
+    // $workResult = null;
+    // if (!empty($options[OPT_RESULT_FILE_PATH]['ID'])) {
+    //     $workResult = OptionTable::update($options[OPT_RESULT_FILE_PATH]['ID'], $arrParams);
+    // } else {
+    //     $workResult = OptionTable::add($arrParams);
+    // }
+    //
+    // if (isset($workResult) && $workResult->isSuccess()) {
+    //     //
+    // } else {
+    //     //
+    // }
+
+    // $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+    header('Location: ?res=123');
+    exit();
+}
 
 CAdminFileDialog::ShowScript(
     [
@@ -44,128 +73,24 @@ CAdminFileDialog::ShowScript(
         'saveConfig' => true
     ]
 );
-
-if ($request->isPost()) {
-    $action = $request->get('action');
-    $action = trim($action);
-
-    if ($action === 'checkfileexists') { // Проверка на существование выбранного файла
-        $APPLICATION->RestartBuffer();
-
-        $result = ['result' => 'miss'];
-        $phpInput = file_get_contents('php://input');
-        $phpInput = json_decode($phpInput, true);
-        if (!empty($phpInput['filepath'])) {
-            $documentRoot = Application::getDocumentRoot();
-            $fullFilePath = $documentRoot . $phpInput['filepath'];
-            $file = new File($fullFilePath);
-            if ($file->isExists() && $file->isFile()) {
-                $result['result'] = 'yes';
-            } else {
-                $result['result'] = 'no';
-            }
-        }
-
-        print json_encode($result);
-
-        exit();
-    } elseif ($action === 'saveparams') { // Сохранение параметров обновления
-        $APPLICATION->RestartBuffer();
-
-        $phpInput = file_get_contents('php://input');
-        $phpInput = json_decode($phpInput, true);
-
-        $result['result'] = 'fail';
-        if (!empty($phpInput['filepath'])) {
-            $arrParams = [
-                'CODE' => OPT_NAME_RESULT_FILE_PATH,
-                'VALUE' => $phpInput['filepath']
-            ];
-
-            $workResult = null;
-            if (!empty($options[OPT_NAME_RESULT_FILE_PATH]['ID'])) {
-                $workResult = OptionTable::update($options[OPT_NAME_RESULT_FILE_PATH]['ID'], $arrParams);
-            } else {
-                $workResult = OptionTable::add($arrParams);
-            }
-            $result = [];
-            if (isset($workResult) && $workResult->isSuccess()) {
-                $result['result'] = $workResult->getId();
-            }
-        }
-
-        print json_encode($result);
-
-        exit();
-    } elseif ($action === 'dowork') { // Do work
-        $APPLICATION->RestartBuffer();
-
-        $result = [];
-
-        $phpInput = file_get_contents('php://input');
-        $phpInput = json_decode($phpInput, true);
-
-        $documentRoot = Application::getDocumentRoot();
-        $fullFilePath = $documentRoot . $phpInput['filepath'];
-        $file = new File($fullFilePath);
-        if ($file->isExists() && $file->isFile()) {
-            $result['result'] = Worker::doWork($fullFilePath);
-        } else {
-            $result['result'] = 'filenotfound';
-        }
-
-        print json_encode($result);
-
-        exit();
-    } elseif ($request->getPost('action') === 'message') { // Системное сообщение
-        $APPLICATION->RestartBuffer();
-
-        $messageType = $request->getPost('type');
-        $messageText = $request->getPost('text');
-        $messageArgs = $request->getPost('args');
-        if (!is_array($messageArgs)) {
-            $messageArgs = [];
-        }
-
-        $message = vsprintf(Loc::getMessage($messageText), $messageArgs);
-        CAdminMessage::ShowMessage(['MESSAGE' => $message, 'TYPE' => $messageType]);
-
-        exit();
-    }
-}
-
-$filePath = '';
-$options = OptionTable::getData();
-if (!empty($options[OPT_NAME_RESULT_FILE_PATH]['VALUE'])) {
-    $filePath = $options[OPT_NAME_RESULT_FILE_PATH]['VALUE'];
-}
 ?>
-
-<script>
-    BX.message({});
-</script>
 
 <div class="wrapper">
     <?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_PAGE_DESCRIPTION') ?>
 </div>
 
 <div class="wrapper">
-    <input type="text" name="selected_file_path" id="selected_file_path" value="<?= $filePath ?>" size="64"
-           placeholder="<?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_FILEPATH_PLACEHOLDER_TITLE') ?>"
-           readonly
-           required>
-    <button id='open_file_dialog_button'>Открыть</button>
-</div>
-
-<input type="hidden" name="requested-page" id="requested-page" value="<?= $request->getRequestedPage() ?>">
-
-<div class="wrapper">
-    <div id="work-info-spinner"></div>
-    <button id="start-work-button">
-        <?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_FILE_START_BUTTON') ?>
-    </button>
-</div>
-
-<div class="wrapper">
-    <div id="work-info"></div>
+    <form action="" method="post">
+        <div>
+            <input type="text" name="selected_file_path" id="selected_file_path" value="<?= $filePath ?>" size="64"
+                   placeholder="<?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_FILEPATH_PLACEHOLDER_TITLE') ?>"
+                   readonly required>
+            <button id='open_file_dialog_button'><?= Loc::getMessage(
+                    'DIGITMIND_SAMPLE_DOWORK_FILEPATH_OPEN_TITLE'
+                ) ?></button>
+        </div>
+        <div>
+            <input type="submit" value="<?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_FORM_SUBMIT') ?>">
+        </div>
+    </form>
 </div>
