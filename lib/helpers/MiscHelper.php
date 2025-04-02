@@ -164,6 +164,12 @@ class MiscHelper
         return $result;
     }
 
+    /**
+     * Проверка на необходимость добавления начального слеша, и добавление при необходимости
+     *
+     * @param $text
+     * @return mixed|string
+     */
     public static function checkFirstSlash($text)
     {
         if (!empty($text)) {
@@ -173,5 +179,28 @@ class MiscHelper
         }
 
         return $text;
+    }
+
+    /**
+     * Возвращает полный URL текущей страницы
+     *
+     * @return string
+     */
+    public static function getFullCurUrl()
+    {
+        $request = Application::getInstance()->getContext()->getRequest();
+        $server = Application::getInstance()->getContext()->getServer();
+
+        $host = '';
+        if ($request->isHttps()) {
+            $host = 'https://';
+        } else {
+            $host = 'http://';
+        }
+
+        $host .= $server->getHttpHost();
+        $requestUri = $request->getRequestUri();
+
+        return "{$host}{$requestUri}";
     }
 }

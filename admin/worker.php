@@ -32,30 +32,32 @@ $options = OptionTable::getData();
 $filePath = $options[OPT_RESULT_FILE_PATH]['VALUE'] ?? '';
 
 if ($request->isPost()) {
-    // $newFilePath = $request->get('filepath');
-    // $newFilePath = trim($newFilePath);
-    //
-    // $arrParams = [
-    //     'CODE' => OPT_RESULT_FILE_PATH,
-    //     'VALUE' => $newFilePath
-    // ];
-    //
-    // $workResult = null;
-    // if (!empty($options[OPT_RESULT_FILE_PATH]['ID'])) {
-    //     $workResult = OptionTable::update($options[OPT_RESULT_FILE_PATH]['ID'], $arrParams);
-    // } else {
-    //     $workResult = OptionTable::add($arrParams);
-    // }
-    //
-    // if (isset($workResult) && $workResult->isSuccess()) {
-    //     //
-    // } else {
-    //     //
-    // }
+    $newFilePath = $request->getPost('selected_file_path');
+    if (is_string($newFilePath)) {
+        $newFilePath = trim($newFilePath);
+        if (!empty($newFilePath)) {
+            $arrParams = [
+                'CODE' => OPT_RESULT_FILE_PATH,
+                'VALUE' => $newFilePath
+            ];
 
-    // $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $workResult = null;
+            if (!empty($options[OPT_RESULT_FILE_PATH]['ID'])) {
+                $workResult = OptionTable::update($options[OPT_RESULT_FILE_PATH]['ID'], $arrParams);
+            } else {
+                $workResult = OptionTable::add($arrParams);
+            }
 
-    header('Location: ?res=123');
+            // if (isset($workResult) && $workResult->isSuccess()) {
+            //     //
+            // } else {
+            //     //
+            // }
+        }
+    }
+
+    $fullCurUrl = MiscHelper::getFullCurUrl();
+    header("Location: $fullCurUrl");
     exit();
 }
 
@@ -85,7 +87,7 @@ CAdminFileDialog::ShowScript(
             <input type="text" name="selected_file_path" id="selected_file_path" value="<?= $filePath ?>" size="64"
                    placeholder="<?= Loc::getMessage('DIGITMIND_SAMPLE_DOWORK_FILEPATH_PLACEHOLDER_TITLE') ?>"
                    readonly required>
-            <button id='open_file_dialog_button'><?= Loc::getMessage(
+            <button id='open_file_dialog_button' type="button"><?= Loc::getMessage(
                     'DIGITMIND_SAMPLE_DOWORK_FILEPATH_OPEN_TITLE'
                 ) ?></button>
         </div>
