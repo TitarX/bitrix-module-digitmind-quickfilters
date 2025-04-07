@@ -1,15 +1,12 @@
 <?php
 
-namespace DigitMind\Sample\Events;
+namespace DigitMind\QuickFilters\Events;
 
 use Bitrix\Main\Loader;
 
-Loader::includeModule('digitmind.sample');
+Loader::includeModule('digitmind.quickfilters');
 
 class MainEvents
 {
-    public static function EpilogHandler()
-    {
-        //
-    }
+    //
 }

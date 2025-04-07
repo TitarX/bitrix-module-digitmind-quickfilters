@@ -1,8 +1,8 @@
 <?php
 
-namespace DigitMind\Sample\Workers;
+namespace DigitMind\QuickFilters\Workers;
 
-use DigitMind\Sample\Helpers\MiscHelper;
+use DigitMind\QuickFilters\Helpers\MiscHelper;
 
 class Worker
 {

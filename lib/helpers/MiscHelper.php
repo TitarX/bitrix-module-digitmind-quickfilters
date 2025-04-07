@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitMind\Sample\Helpers;
+namespace DigitMind\QuickFilters\Helpers;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
@@ -10,7 +10,7 @@ class MiscHelper
 {
     public static function getModuleId()
     {
-        return 'digitmind.sample';
+        return 'digitmind.quickfilters';
     }
 
     public static function getAssetsPath($type)

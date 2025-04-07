@@ -15,9 +15,9 @@ class digitmind_sample extends CModule
 
     function __construct()
     {
-        $this->MODULE_ID = 'digitmind.sample';
-        $this->MODULE_NAME = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_NAME');
-        $this->MODULE_DESCRIPTION = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_DESCRIPTION');
+        $this->MODULE_ID = 'digitmind.quickfilters';
+        $this->MODULE_NAME = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NAME');
+        $this->MODULE_DESCRIPTION = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_DESCRIPTION');
 
         $this->PARTNER_NAME = '';
         $this->PARTNER_URI = '';
