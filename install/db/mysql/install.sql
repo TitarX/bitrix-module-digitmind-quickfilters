@@ -1,4 +1,4 @@
-create table if not exists digitmind_sample_option
+create table if not exists digitmind_quickfilters_option
 (
     `ID` int not null auto_increment,
     `CODE` varchar(255) not null,

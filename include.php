@@ -7,6 +7,7 @@ use Bitrix\Main\Loader;
 Loader::registerAutoloadClasses(
     'digitmind.quickfilters',
     [
+        'DigitMind\QuickFilters\Events\MainEvents' => 'lib/events/MainEvents.php',
         'DigitMind\QuickFilters\Events\PageEvents' => 'lib/events/PageEvents.php',
         'DigitMind\QuickFilters\Entities\OptionTable' => 'lib/entities/OptionTable.php',
         'DigitMind\QuickFilters\Helpers\MiscHelper' => 'lib/helpers/MiscHelper.php',

@@ -9,7 +9,7 @@ use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
-class digitmind_sample extends CModule
+class digitmind_quickfilters extends CModule
 {
     var $exclusionAdminFiles;
 
@@ -111,7 +111,7 @@ class digitmind_sample extends CModule
 
         $documentRoot = Application::getDocumentRoot();
         $errors = $DB->RunSQLBatch(
-            "{$documentRoot}/bitrix/modules/digitmind.sample/install/db/" . strtolower($DB->type) . '/install.sql'
+            "{$documentRoot}/bitrix/modules/digitmind.quickfilters/install/db/" . strtolower($DB->type) . '/install.sql'
         );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
@@ -129,7 +129,7 @@ class digitmind_sample extends CModule
 
         $documentRoot = Application::getDocumentRoot();
         $errors = $DB->RunSQLBatch(
-            "{$documentRoot}/bitrix/modules/digitmind.sample/install/db/" . strtolower($DB->type) . '/uninstall.sql'
+            "{$documentRoot}/bitrix/modules/digitmind.quickfilters/install/db/" . strtolower($DB->type) . '/uninstall.sql'
         );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
@@ -142,8 +142,8 @@ class digitmind_sample extends CModule
     private function copyFiles($documentRoot)
     {
         CopyDirFiles(
-            __DIR__ . '/pages/admin/digitmind_sample_worker.php',
-            "{$documentRoot}/bitrix/admin/digitmind_sample_worker.php",
+            __DIR__ . '/pages/admin/digitmind_quickfilters_worker.php',
+            "{$documentRoot}/bitrix/admin/digitmind_quickfilters_worker.php",
             true,
             true,
             false
@@ -156,7 +156,7 @@ class digitmind_sample extends CModule
 
     private function deleteFiles()
     {
-        DeleteDirFilesEx('/bitrix/admin/digitmind_sample_worker.php');
+        DeleteDirFilesEx('/bitrix/admin/digitmind_quickfilters_worker.php');
 
         DeleteDirFilesEx("/bitrix/js/{$this->MODULE_ID}");
         DeleteDirFilesEx("/bitrix/css/{$this->MODULE_ID}");
@@ -183,10 +183,10 @@ class digitmind_sample extends CModule
     {
         EventManager::getInstance()->registerEventHandler(
             'main',
-            'OnEpilog',
+            'OnPageStart',
             $this->MODULE_ID,
-            'DigitMind\Sample\Events\MainEvents',
-            'EpilogHandler',
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'checkQuickFilter',
             1000
         );
     }
@@ -195,10 +195,10 @@ class digitmind_sample extends CModule
     {
         EventManager::getInstance()->unRegisterEventHandler(
             'main',
-            'OnEpilog',
+            'OnPageStart',
             $this->MODULE_ID,
-            'DigitMind\Sample\Events\MainEvents',
-            'EpilogHandler'
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'checkQuickFilter'
         );
     }
 
@@ -207,7 +207,7 @@ class digitmind_sample extends CModule
         return [
             "reference_id" => ['D'],
             "reference" => [
-                '[D] ' . Loc::getMessage('DIGITMIND_SAMPLE_RIGHT_DENIED')
+                '[D] ' . Loc::getMessage('DIGITMIND_QUICKFILTERS_RIGHT_DENIED')
             ]
         ];
     }
