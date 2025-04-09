@@ -48,7 +48,7 @@ class digitmind_quickfilters extends CModule
         $errors = '';
 
         if (!ModuleManager::isModuleInstalled('iblock')) {
-            $errors = Loc::getMessage('DIGITMIND_SAMPLE_MODULE_NOT_INSTALLED_IBLOCK');
+            $errors = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_IBLOCK');
         } else {
             $documentRoot = Application::getDocumentRoot();
             $this->copyFiles($documentRoot);
@@ -61,7 +61,7 @@ class digitmind_quickfilters extends CModule
         }
 
         $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('DIGITMIND_SAMPLE_MODULE_INSTALL'),
+            Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL'),
             __DIR__ . '/step.php'
         );
     }
@@ -82,7 +82,7 @@ class digitmind_quickfilters extends CModule
         ModuleManager::unRegisterModule($this->MODULE_ID);
 
         $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('DIGITMIND_SAMPLE_MODULE_UNINSTALL'),
+            Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL'),
             __DIR__ . '/unstep.php'
         );
     }
