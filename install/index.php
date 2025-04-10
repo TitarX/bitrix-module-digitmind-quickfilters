@@ -189,6 +189,15 @@ class digitmind_quickfilters extends CModule
             'checkQuickFilter',
             1000
         );
+
+        EventManager::getInstance()->registerEventHandler(
+            'main',
+            'OnEpilog',
+            $this->MODULE_ID,
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'setMeta',
+            1000
+        );
     }
 
     function UnRegisterEvents()
@@ -199,6 +208,14 @@ class digitmind_quickfilters extends CModule
             $this->MODULE_ID,
             'DigitMind\QuickFilters\Events\PageEvents',
             'checkQuickFilter'
+        );
+
+        EventManager::getInstance()->unRegisterEventHandler(
+            'main',
+            'OnEpilog',
+            $this->MODULE_ID,
+            'DigitMind\QuickFilters\Events\PageEvents',
+            'setMeta'
         );
     }
 

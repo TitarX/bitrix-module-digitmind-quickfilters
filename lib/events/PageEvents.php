@@ -20,4 +20,9 @@ class PageEvents
             exit();
         }
     }
+
+    public static function setMeta()
+    {
+        //
+    }
 }
