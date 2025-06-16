@@ -6,6 +6,7 @@ use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\IO\Directory;
+use DigitMind\QuickFilters\Entities\QuickFiltersIblock;
 
 Loc::loadMessages(__FILE__);
 
@@ -40,30 +41,53 @@ class digitmind_quickfilters extends CModule
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     function DoInstall()
     {
         global $APPLICATION;
+        global $step;
         global $errors;
 
         $errors = '';
+        $step = intval($step);
 
         if (!ModuleManager::isModuleInstalled('iblock')) {
             $errors = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_IBLOCK');
+
+            $APPLICATION->IncludeAdminFile(
+                Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL_DONE'),
+                __DIR__ . '/step2.php'
+            );
         } else {
-            $documentRoot = Application::getDocumentRoot();
-            $this->copyFiles($documentRoot);
-            $this->createDirectories($documentRoot);
+            if ($step < 2) {
+                $APPLICATION->IncludeAdminFile(
+                    Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL'),
+                    __DIR__ . '/step1.php'
+                );
+            } else {
+                $documentRoot = Application::getDocumentRoot();
 
-            $this->RegisterEvents();
-            $this->InstallDB();
+                // Создание инфоблока
+                if (!empty($_POST['create_iblock']) && $_POST['create_iblock'] == 'Y') {
+                    QuickFiltersIblock::createIblock();
+                }
 
-            ModuleManager::registerModule($this->MODULE_ID);
+                $this->copyFiles($documentRoot);
+                $this->createDirectories($documentRoot);
+
+                $this->RegisterEvents();
+                $this->InstallDB();
+
+                ModuleManager::registerModule($this->MODULE_ID);
+
+                $APPLICATION->IncludeAdminFile(
+                    Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL_DONE'),
+                    __DIR__ . '/step2.php'
+                );
+            }
         }
-
-        $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL'),
-            __DIR__ . '/step.php'
-        );
     }
 
     function DoUninstall()
@@ -129,7 +153,9 @@ class digitmind_quickfilters extends CModule
 
         $documentRoot = Application::getDocumentRoot();
         $errors = $DB->RunSQLBatch(
-            "{$documentRoot}/bitrix/modules/digitmind.quickfilters/install/db/" . strtolower($DB->type) . '/uninstall.sql'
+            "{$documentRoot}/bitrix/modules/digitmind.quickfilters/install/db/" . strtolower(
+                $DB->type
+            ) . '/uninstall.sql'
         );
         if (!empty($errors)) {
             $APPLICATION->ThrowException(implode('. ', $errors));
