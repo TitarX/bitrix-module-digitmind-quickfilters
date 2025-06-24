@@ -3,6 +3,7 @@
 namespace DigitMind\QuickFilters\Entities;
 
 use Exception;
+use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Iblock\IblockTable;
 use Bitrix\Iblock\TypeTable;
@@ -14,8 +15,9 @@ Loc::loadMessages(__FILE__);
 
 class QuickFiltersIblock
 {
-    const IBLOCK_TYPE_ID = 'digit_mind_quick_filters';
-    const IBLOCK_CODE = 'digit_mind_quick_filters';
+    private const IBLOCK_TYPE_ID = 'digitmind_quick_filters';
+    private const IBLOCK_CODE = 'digitmind_quick_filters';
+    private const LANGUAGE_DEFAULT = 'ru';
 
     private static array $propMap = [
         '100' => [
@@ -82,6 +84,18 @@ class QuickFiltersIblock
             'IS_REQUIRED' => 'N'
         ]
     ];
+
+    public static function getIblockTypeUrl(): string
+    {
+        $lang = Application::getInstance()->getContext()->getRequest()->get('lang');
+        if (empty($lang)) {
+            $lang = !empty(LANGUAGE_ID) ? LANGUAGE_ID : self::LANGUAGE_DEFAULT;
+        }
+
+        $type = self::IBLOCK_TYPE_ID;
+
+        return "/bitrix/admin/iblock_admin.php?type={$type}&lang={$lang}&admin=Y";
+    }
 
     /**
      * @throws Exception
