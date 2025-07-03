@@ -4,8 +4,11 @@ namespace DigitMind\QuickFilters\Helpers;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
+use Bitrix\Main\Loader;
 use CAdminMessage;
 use CSite;
+
+Loader::includeModule('digitmind.quickfilters');
 
 class MiscHelper
 {

@@ -4,10 +4,13 @@ namespace DigitMind\QuickFilters\Entities;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\Loader;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\Type;
 use Bitrix\Main\Entity;
 use Bitrix\Main\SystemException;
+
+Loader::includeModule('digitmind.quickfilters');
 
 class OptionTable extends Entity\DataManager
 {

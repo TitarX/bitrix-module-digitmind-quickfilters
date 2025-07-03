@@ -16,6 +16,8 @@ class digitmind_quickfilters extends CModule
 
     function __construct()
     {
+        include(__DIR__ . '/../include.php');
+
         $this->MODULE_ID = 'digitmind.quickfilters';
         $this->MODULE_NAME = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_NAME');
         $this->MODULE_DESCRIPTION = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_DESCRIPTION');
@@ -44,7 +46,7 @@ class digitmind_quickfilters extends CModule
     /**
      * @throws Exception
      */
-    function DoInstall()
+    function DoInstall(): void
     {
         global $APPLICATION;
         global $step;
@@ -90,7 +92,7 @@ class digitmind_quickfilters extends CModule
         }
     }
 
-    function DoUninstall()
+    function DoUninstall(): void
     {
         global $APPLICATION;
         global $errors;
@@ -112,7 +114,7 @@ class digitmind_quickfilters extends CModule
     }
 
     // Определяем место размещения модуля
-    public function GetPath($notDocumentRoot = false)
+    public function GetPath($notDocumentRoot = false): string
     {
         if ($notDocumentRoot) {
             return str_ireplace(Application::getDocumentRoot(), '', dirname(__DIR__));
@@ -122,12 +124,12 @@ class digitmind_quickfilters extends CModule
     }
 
     // Проверяем что система поддерживает D7
-    public function isVersionD7()
+    public function isVersionD7(): bool
     {
-        return CheckVersion(ModuleManager::getVersion('main'), '14.00.00');
+        return (version_compare(ModuleManager::getVersion('main'), '14.00.00') >= 0);
     }
 
-    function InstallDB()
+    function InstallDB(): bool
     {
         global $APPLICATION;
         global $DB;
@@ -145,7 +147,7 @@ class digitmind_quickfilters extends CModule
         return true;
     }
 
-    function UnInstallDB()
+    function UnInstallDB(): bool
     {
         global $APPLICATION;
         global $DB;
@@ -165,7 +167,7 @@ class digitmind_quickfilters extends CModule
         return true;
     }
 
-    private function copyFiles($documentRoot)
+    private function copyFiles($documentRoot): void
     {
         CopyDirFiles(
             __DIR__ . '/pages/admin/digitmind_quickfilters_worker.php',
@@ -180,7 +182,7 @@ class digitmind_quickfilters extends CModule
         CopyDirFiles(__DIR__ . '/images', "{$documentRoot}/bitrix/images/{$this->MODULE_ID}", true, true, false);
     }
 
-    private function deleteFiles()
+    private function deleteFiles(): void
     {
         DeleteDirFilesEx('/bitrix/admin/digitmind_quickfilters_worker.php');
 
@@ -189,7 +191,7 @@ class digitmind_quickfilters extends CModule
         DeleteDirFilesEx("/bitrix/images/{$this->MODULE_ID}");
     }
 
-    private function createDirectories($documentRoot)
+    private function createDirectories($documentRoot): void
     {
         $uploadDirectoryName = Option::get('main', 'upload_dir');
 
@@ -199,13 +201,13 @@ class digitmind_quickfilters extends CModule
         }
     }
 
-    private function deleteDirectories()
+    private function deleteDirectories(): void
     {
         $uploadDirectoryPath = Option::get('main', 'upload_dir');
         DeleteDirFilesEx("/{$uploadDirectoryPath}/{$this->MODULE_ID}");
     }
 
-    function RegisterEvents()
+    function RegisterEvents(): void
     {
         EventManager::getInstance()->registerEventHandler(
             'main',
@@ -226,7 +228,7 @@ class digitmind_quickfilters extends CModule
         );
     }
 
-    function UnRegisterEvents()
+    function UnRegisterEvents(): void
     {
         EventManager::getInstance()->unRegisterEventHandler(
             'main',
@@ -245,7 +247,7 @@ class digitmind_quickfilters extends CModule
         );
     }
 
-    function GetModuleRightList()
+    function GetModuleRightList(): array
     {
         return [
             "reference_id" => ['D'],

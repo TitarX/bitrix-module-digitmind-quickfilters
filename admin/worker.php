@@ -11,8 +11,9 @@ use DigitMind\QuickFilters\Workers\Worker;
 
 define('OPT_RESULT_FILE_PATH', 'RESULT_FILE_PATH');
 
-Loc::loadMessages(__FILE__);
 Loader::includeModule('digitmind.quickfilters');
+
+Loc::loadMessages(__FILE__);
 
 @set_time_limit(360);
 

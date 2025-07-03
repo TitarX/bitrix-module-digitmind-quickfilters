@@ -3,6 +3,7 @@
 namespace DigitMind\QuickFilters\Entities;
 
 use Exception;
+use Bitrix\Main\Loader;
 use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Iblock\IblockTable;
@@ -10,6 +11,9 @@ use Bitrix\Iblock\TypeTable;
 use Bitrix\Iblock\PropertyTable;
 use Bitrix\Iblock\PropertyEnumerationTable;
 use DigitMind\QuickFilters\Helpers\MiscHelper;
+
+Loader::includeModule('iblock');
+Loader::includeModule('digitmind.quickfilters');
 
 Loc::loadMessages(__FILE__);
 
