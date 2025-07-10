@@ -11,7 +11,14 @@ Loc::loadMessages(__FILE__);
 global $APPLICATION;
 
 if (empty($errors)) {
-    CAdminMessage::ShowNote(Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS'));
+    CAdminMessage::ShowMessage(
+        [
+            'TYPE' => 'OK',
+            'MESSAGE' => Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS'),
+            'DETAILS' => Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_DET'),
+            'HTML' => true
+        ]
+    );
 } else {
     CAdminMessage::ShowMessage(
         [

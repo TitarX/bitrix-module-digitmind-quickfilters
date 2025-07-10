@@ -2,6 +2,7 @@
 
 namespace DigitMind\QuickFilters\Entities;
 
+use Bitrix\Iblock\TypeLanguageTable;
 use Exception;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Application;
@@ -178,23 +179,36 @@ class QuickFiltersIblock
             'ID' => self::IBLOCK_TYPE_ID,
             'SECTIONS' => 'Y',
             'IN_RSS' => 'N',
-            'SORT' => 500,
-            'LANG' => [
-                'ru' => [
-                    'NAME' => 'Быстрые фильтры',
-                    'SECTION_NAME' => 'Разделы',
-                    'ELEMENT_NAME' => 'Элементы'
-                ],
-                'en' => [
-                    'NAME' => 'Quick filters',
-                    'SECTION_NAME' => 'Sections',
-                    'ELEMENT_NAME' => 'Elements'
-                ],
+            'SORT' => 100,
+        ];
+
+        $names = [
+            'ru' => [
+                'NAME' => 'Быстрые фильтры',
+                'SECTION_NAME' => 'Разделы2',
+                'ELEMENT_NAME' => 'Элементы2',
+            ],
+            'en' => [
+                'NAME' => 'Quick filters',
+                'SECTION_NAME' => 'Sections2',
+                'ELEMENT_NAME' => 'Elements2',
             ],
         ];
 
         try {
             TypeTable::add($parameters);
+
+            foreach ($names as $lid => $name) {
+                TypeLanguageTable::add([
+                    'IBLOCK_TYPE_ID' => self::IBLOCK_TYPE_ID,
+                    'LANGUAGE_ID' => $lid,
+                    'LID' => $lid,
+                    'NAME' => $name['NAME'],
+                    'SECTION_NAME' => $name['SECTION_NAME'],
+                    'ELEMENT_NAME' => $name['ELEMENT_NAME'],
+                ]);
+            }
+
             return true;
         } catch (Exception $e) {
             return $e->getMessage();

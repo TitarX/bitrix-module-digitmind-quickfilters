@@ -23,7 +23,7 @@ class digitmind_quickfilters extends CModule
         $this->MODULE_DESCRIPTION = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_DESCRIPTION');
 
         $this->PARTNER_NAME = 'DigitMind';
-        $this->PARTNER_URI = 'https://bxmaster.com/';
+        $this->PARTNER_URI = 'https://bxmaster.com';
 
         $arModuleVersion = [];
         include(__DIR__ . '/version.php');
