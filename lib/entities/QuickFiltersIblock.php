@@ -2,15 +2,12 @@
 
 namespace DigitMind\QuickFilters\Entities;
 
-use Bitrix\Iblock\TypeLanguageTable;
-use Exception;
+use CIBlock;
+use CIBlockProperty;
+use CIBlockType;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
-use Bitrix\Iblock\IblockTable;
-use Bitrix\Iblock\TypeTable;
-use Bitrix\Iblock\PropertyTable;
-use Bitrix\Iblock\PropertyEnumerationTable;
 use DigitMind\QuickFilters\Helpers\MiscHelper;
 
 Loader::includeModule('iblock');
@@ -24,71 +21,102 @@ class QuickFiltersIblock
     private const IBLOCK_CODE = 'digitmind_quick_filters';
     private const LANGUAGE_DEFAULT = 'ru';
 
-    private static array $propMap = [
-        '100' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_CONTENT_URL_NAME',
-            'CODE' => 'CONTENT_URL',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'Y'
-        ],
-        '200' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_META_H1_NAME',
-            'CODE' => 'META_H1',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '300' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_META_TITLE_NAME',
-            'CODE' => 'META_TITLE',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '400' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_META_KEYWORDS_NAME',
-            'CODE' => 'META_KEYWORDS',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '500' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_META_DESCRIPTION_NAME',
-            'CODE' => 'META_DESCRIPTION',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '600' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_META_CANONICAL_NAME',
-            'CODE' => 'META_CANONICAL',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '700' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_BC_NAME_NAME',
-            'CODE' => 'BC_NAME',
-            'PROPERTY_TYPE' => 'S',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '800' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_BC_AS_LINK_NAME',
-            'CODE' => 'BC_AS_LINK',
-            'PROPERTY_TYPE' => 'B',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ],
-        '900' => [
-            'NAME_LANG_CODE' => 'DIGITMIND_QUICKFILTERS_PROP_HTTP_CODE_NAME',
-            'CODE' => 'HTTP_CODE',
-            'PROPERTY_TYPE' => 'L',
-            'MULTIPLE' => 'N',
-            'IS_REQUIRED' => 'N'
-        ]
-    ];
+    private static function getIblockPropertyValues(string|int $iblockId): array
+    {
+        return [
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_CONTENT_URL_NAME'),
+                'SORT' => '100',
+                'CODE' => 'CONTENT_URL',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'Y'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_META_H1_NAME'),
+                'SORT' => '200',
+                'CODE' => 'META_H1',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_META_TITLE_NAME'),
+                'SORT' => '300',
+                'CODE' => 'META_TITLE',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_META_KEYWORDS_NAME'),
+                'SORT' => '400',
+                'CODE' => 'META_KEYWORDS',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_META_DESCRIPTION_NAME'),
+                'SORT' => '500',
+                'CODE' => 'META_DESCRIPTION',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_META_CANONICAL_NAME'),
+                'SORT' => '600',
+                'CODE' => 'META_CANONICAL',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_BC_NAME_NAME'),
+                'SORT' => '700',
+                'CODE' => 'BC_NAME',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N'
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_BC_AS_LINK_NAME'),
+                'SORT' => '800',
+                'CODE' => 'BC_AS_LINK',
+                'PROPERTY_TYPE' => 'L',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N',
+                'LIST_TYPE' => 'C',
+                'VALUES' => [
+                    [
+                        'VALUE' => '',
+                        'DEF' => 'Y',
+                        'SORT' => 100
+                    ]
+                ]
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_HTTP_CODE_NAME'),
+                'SORT' => '900',
+                'CODE' => 'HTTP_CODE',
+                'PROPERTY_TYPE' => 'L',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'N',
+                'LIST_TYPE' => 'L',
+                'VALUES' => MiscHelper::getHttpCodePropertyValues()
+            ]
+        ];
+    }
 
     public static function getIblockTypeUrl(): string
     {
@@ -102,12 +130,10 @@ class QuickFiltersIblock
         return "/bitrix/admin/iblock_admin.php?type={$type}&lang={$lang}&admin=Y";
     }
 
-    /**
-     * @throws Exception
-     */
     public static function createIblock(): bool|string
     {
         $returnResult = false;
+
         $iblockName = Loc::getMessage('DIGITMIND_QUICKFILTERS_IBLOCK_NAME');
 
         if (self::isIblockExists() !== false) {
@@ -126,48 +152,26 @@ class QuickFiltersIblock
             $siteIds[] = 's1';
         }
 
-        try {
-            $result = IblockTable::add([
-                'IBLOCK_TYPE_ID' => self::IBLOCK_TYPE_ID,
-                'LID' => $siteIds,
-                'CODE' => self::IBLOCK_CODE,
-                'NAME' => $iblockName,
-                'ACTIVE' => 'Y',
-                'SORT' => 100,
-                'DESCRIPTION_TYPE' => 'html',
-            ]);
+        $iblock = new CIBlock();
 
-            if ($result->isSuccess()) {
-                $returnResult = true;
-                $iblockId = $result->getId();
+        $arFields = [
+            'IBLOCK_TYPE_ID' => self::IBLOCK_TYPE_ID,
+            'LID' => $siteIds,
+            'CODE' => self::IBLOCK_CODE,
+            'NAME' => $iblockName,
+            'ACTIVE' => 'Y',
+            'SORT' => 100,
+            'DESCRIPTION_TYPE' => 'text',
+        ];
 
-                foreach (self::$propMap as $propIndex => $prop) {
-                    $propAddResult = PropertyTable::add([
-                        'IBLOCK_ID' => $iblockId,
-                        'NAME' => Loc::getMessage($prop['NAME_LANG_CODE']),
-                        'CODE' => $prop['CODE'],
-                        'PROPERTY_TYPE' => $prop['PROPERTY_TYPE'],
-                        'SORT' => $propIndex,
-                        'MULTIPLE' => $prop['MULTIPLE'],
-                        'IS_REQUIRED' => $prop['IS_REQUIRED']
-                    ]);
+        $iblockId = $iblock->Add($arFields);
 
-                    if ($prop['PROPERTY_TYPE'] === 'L' && $propAddResult->isSuccess()) {
-                        if ($prop['CODE'] === 'HTTP_CODE') {
-                            foreach (MiscHelper::getHttpCodes() as $httpCodeIndex => $httpCode) {
-                                PropertyEnumerationTable::add([
-                                    'PROPERTY_ID' => $propAddResult->getId(),
-                                    'VALUE' => $httpCode,
-                                    'SORT' => $httpCodeIndex,
-                                    'DEF' => ($httpCodeIndex == '200' ? 'Y' : 'N')
-                                ]);
-                            }
-                        }
-                    }
-                }
+        $returnResult = (!empty($iblockId) && is_numeric($iblockId));
+        if ($returnResult) {
+            foreach (self::getIblockPropertyValues($iblockId) as $iblockPropertyValues) {
+                $iblockProperty = new CIBlockProperty();
+                $iblockProperty->Add($iblockPropertyValues);
             }
-        } catch (Exception $e) {
-            $returnResult = $e->getMessage();
         }
 
         return $returnResult;
@@ -175,80 +179,69 @@ class QuickFiltersIblock
 
     private static function createIblockType(): bool|string
     {
-        $parameters = [
+        global $DB;
+
+        $arFields = [
             'ID' => self::IBLOCK_TYPE_ID,
             'SECTIONS' => 'Y',
             'IN_RSS' => 'N',
             'SORT' => 100,
+            'LANG' => [
+                'ru' => [
+                    'NAME' => 'Быстрые фильтры',
+                    'SECTION_NAME' => 'Разделы2',
+                    'ELEMENT_NAME' => 'Элементы2',
+                ],
+                'en' => [
+                    'NAME' => 'Quick filters',
+                    'SECTION_NAME' => 'Sections2',
+                    'ELEMENT_NAME' => 'Elements2',
+                ],
+            ]
         ];
 
-        $names = [
-            'ru' => [
-                'NAME' => 'Быстрые фильтры',
-                'SECTION_NAME' => 'Разделы2',
-                'ELEMENT_NAME' => 'Элементы2',
-            ],
-            'en' => [
-                'NAME' => 'Quick filters',
-                'SECTION_NAME' => 'Sections2',
-                'ELEMENT_NAME' => 'Elements2',
-            ],
-        ];
-
-        try {
-            TypeTable::add($parameters);
-
-            foreach ($names as $lid => $name) {
-                TypeLanguageTable::add([
-                    'IBLOCK_TYPE_ID' => self::IBLOCK_TYPE_ID,
-                    'LANGUAGE_ID' => $lid,
-                    'LID' => $lid,
-                    'NAME' => $name['NAME'],
-                    'SECTION_NAME' => $name['SECTION_NAME'],
-                    'ELEMENT_NAME' => $name['ELEMENT_NAME'],
-                ]);
-            }
-
+        $iblocktype = new CIBlockType();
+        $DB->StartTransaction();
+        $addResult = $iblocktype->Add($arFields);
+        if ($addResult) {
+            $DB->Commit();
             return true;
-        } catch (Exception $e) {
-            return $e->getMessage();
+        } else {
+            $DB->Rollback();
+            return $iblocktype->LAST_ERROR;
         }
     }
 
-    private static function isIblockTypeExists(): bool|string
+    private static function isIblockTypeExists(): bool
     {
         $returnResult = false;
 
-        try {
-            $result = TypeTable::getByPrimary(self::IBLOCK_TYPE_ID)->fetch();
+        $dbResult = CIBlockType::GetList(
+            ['SORT' => 'ASC'],
+            ['ID' => self::IBLOCK_TYPE_ID]
+        );
 
-            if (!empty($result)) {
-                $returnResult = true;
-            }
-        } catch (Exception $e) {
-            $returnResult = $e->getMessage();
+        if ($dbResult->Fetch()) {
+            $returnResult = true;
         }
 
         return $returnResult;
     }
 
-    private static function isIblockExists(): bool|string
+    private static function isIblockExists(): bool
     {
         $returnResult = false;
 
-        try {
-            $result = IblockTable::getList([
-                'filter' => [
-                    'CODE' => self::IBLOCK_CODE
-                ],
-                'select' => ['ID']
-            ])->fetch();
+        $dbResult = CIBlock::GetList(
+            ['SORT' => 'ASC'],
+            [
+                'TYPE' => self::IBLOCK_TYPE_ID,
+                'CODE' => self::IBLOCK_CODE
+            ]
+        );
 
-            if (!empty($result)) {
-                $returnResult = true;
-            }
-        } catch (Exception $e) {
-            $returnResult = $e->getMessage();
+        if ($dbResult->Fetch()) {
+            $returnResult = true;
         }
 
         return $returnResult;

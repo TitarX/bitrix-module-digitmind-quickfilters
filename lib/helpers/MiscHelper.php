@@ -236,7 +236,7 @@ class MiscHelper
      *
      * @return array
      */
-    public static function getHttpCodes(): array
+    private static function getHttpCodes(): array
     {
         return [
             '100' => '100 Continue',
@@ -301,5 +301,25 @@ class MiscHelper
             '510' => '510 Not Extended',
             '511' => '511 Network Authentication Required'
         ];
+    }
+
+    /**
+     * Возвращает массив значений HTTP-кодов для свойства инфоблока
+     *
+     * @return array
+     */
+    public static function getHttpCodePropertyValues(): array
+    {
+        $result = [];
+
+        foreach (self::getHttpCodes() as $httpCodeIndex => $httpCode) {
+            $result[] = [
+                'VALUE' => $httpCode,
+                'DEF' => ($httpCodeIndex === '200' ? 'Y' : 'N'),
+                'SORT' => $httpCodeIndex
+            ];
+        }
+
+        return $result;
     }
 }
