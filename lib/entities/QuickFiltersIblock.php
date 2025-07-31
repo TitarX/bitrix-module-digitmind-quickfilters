@@ -98,9 +98,10 @@ class QuickFiltersIblock
                 'LIST_TYPE' => 'C',
                 'VALUES' => [
                     [
-                        'VALUE' => '',
+                        'VALUE' => 'Y',
                         'DEF' => 'Y',
-                        'SORT' => 100
+                        'SORT' => 100,
+                        'XML_ID' => 'Y'
                     ]
                 ]
             ],
@@ -162,6 +163,9 @@ class QuickFiltersIblock
             'ACTIVE' => 'Y',
             'SORT' => 100,
             'DESCRIPTION_TYPE' => 'text',
+            'INDEX_SECTION' => 'N',
+            'INDEX_ELEMENT' => 'N',
+            'WORKFLOW' => 'N' // WF_TYPE
         ];
 
         $iblockId = $iblock->Add($arFields);
@@ -172,6 +176,18 @@ class QuickFiltersIblock
                 $iblockProperty = new CIBlockProperty();
                 $iblockProperty->Add($iblockPropertyValues);
             }
+
+            $arSettings = [
+                'CODE' => [
+                    'IS_REQUIRED' => 'Y',
+                    'DEFAULT_VALUE' => [
+                        'UNIQUE' => 'Y',
+                        'TRANSLITERATION' => 'Y'
+                    ]
+                ]
+            ];
+
+            CIBlock::setFields($iblockId, $arSettings);
         }
 
         return $returnResult;
@@ -189,14 +205,14 @@ class QuickFiltersIblock
             'LANG' => [
                 'ru' => [
                     'NAME' => 'Быстрые фильтры',
-                    'SECTION_NAME' => 'Разделы2',
-                    'ELEMENT_NAME' => 'Элементы2',
+                    'SECTION_NAME' => 'Разделы',
+                    'ELEMENT_NAME' => 'Элементы'
                 ],
                 'en' => [
                     'NAME' => 'Quick filters',
-                    'SECTION_NAME' => 'Sections2',
-                    'ELEMENT_NAME' => 'Elements2',
-                ],
+                    'SECTION_NAME' => 'Sections',
+                    'ELEMENT_NAME' => 'Elements'
+                ]
             ]
         ];
 
