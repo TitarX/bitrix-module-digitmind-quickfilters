@@ -1,6 +1,7 @@
 <?php
 
 use Bitrix\Main\Localization\Loc;
+use DigitMind\QuickFilters\Helpers\MiscHelper;
 
 Loc::loadMessages(__FILE__);
 
@@ -10,7 +11,7 @@ global $APPLICATION;
 <form method="post" action="<?= $APPLICATION->GetCurPage() ?>">
     <?= bitrix_sessid_post() ?>
     <input type="hidden" name="lang" value="<?= LANGUAGE_ID ?>">
-    <input type="hidden" name="id" value="digitmind.quickfilters">
+    <input type="hidden" name="id" value="<?= MiscHelper::getModuleId() ?>">
     <input type="hidden" name="install" value="Y">
     <input type="hidden" name="step" value="2">
 
