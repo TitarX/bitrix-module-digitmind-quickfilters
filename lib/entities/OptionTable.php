@@ -102,18 +102,54 @@ class OptionTable extends Entity\DataManager
      * @throws ArgumentException
      * @throws ObjectPropertyException
      */
-    public static function getData(): array
+    public static function getAllData(): array
     {
         $result = [];
 
         $dbResult = OptionTable::getList([
-            'select' => ['ID', 'CODE', 'VALUE']
+            'select' => ['*']
         ]);
         while ($arrResult = $dbResult->fetch()) {
             $result[$arrResult['CODE']] = [
                 'ID' => $arrResult['ID'],
-                'VALUE' => $arrResult['VALUE']
+                'VALUE' => $arrResult['VALUE'],
+                'CREATE_DATE' => $arrResult['CREATE_DATE'],
+                'UPDATE_DATE' => $arrResult['UPDATE_DATE']
             ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $code
+     * @return array
+     * @throws ArgumentException
+     * @throws ObjectPropertyException
+     * @throws SystemException
+     */
+    public static function getOption(string $code): array
+    {
+        return OptionTable::getRow(['CODE' => $code]) ?: [];
+    }
+
+    /**
+     * @param string $code
+     * @return bool
+     * @throws ArgumentException
+     * @throws ObjectPropertyException
+     * @throws SystemException
+     */
+    public static function isOption(string $code): bool
+    {
+        $result = false;
+
+        $dbResult = OptionTable::getList([
+            'filter' => ['CODE' => $code],
+            'select' => ['ID']
+        ]);
+        if ($dbResult->fetch()) {
+            $result = true;
         }
 
         return $result;

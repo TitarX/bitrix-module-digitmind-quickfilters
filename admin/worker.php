@@ -29,7 +29,7 @@ Asset::getInstance()->addJs(MiscHelper::getAssetsPath('js') . '/main.js');
 Asset::getInstance()->addJs(MiscHelper::getAssetsPath('js') . '/worker.js');
 
 $request = Application::getInstance()->getContext()->getRequest();
-$options = OptionTable::getData();
+$options = OptionTable::getAllData();
 $filePath = $options[OPT_RESULT_FILE_PATH]['VALUE'] ?? '';
 
 if ($request->isPost()) {
