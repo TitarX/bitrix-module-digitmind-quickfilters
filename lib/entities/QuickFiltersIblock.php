@@ -21,6 +21,11 @@ class QuickFiltersIblock
     private const IBLOCK_CODE = 'digitmind_quick_filters';
     private const LANGUAGE_DEFAULT = 'ru';
 
+    /**
+     * Свойиства инфоблока
+     *
+     * @return array<int, array<string, mixed>>
+     */
     private static function getIblockPropertyValues(string|int $iblockId): array
     {
         return [
@@ -119,6 +124,11 @@ class QuickFiltersIblock
         ];
     }
 
+    /**
+     * Возвращает URL административного раздела БУС для управления типом инфоблока
+     *
+     * @return string
+     */
     public static function getIblockTypeUrl(): string
     {
         $lang = Application::getInstance()->getContext()->getRequest()->get('lang');
@@ -131,6 +141,11 @@ class QuickFiltersIblock
         return "/bitrix/admin/iblock_admin.php?type={$type}&lang={$lang}&admin=Y";
     }
 
+    /**
+     * Создание инофоблока
+     *
+     * @return bool|string
+     */
     public static function createIblock(): bool|string
     {
         $returnResult = false;
@@ -193,6 +208,11 @@ class QuickFiltersIblock
         return $returnResult;
     }
 
+    /**
+     * Создание типа инфоблока
+     *
+     * @return bool|string
+     */
     private static function createIblockType(): bool|string
     {
         global $DB;
@@ -228,7 +248,12 @@ class QuickFiltersIblock
         }
     }
 
-    private static function isIblockTypeExists(): bool
+    /**
+     * Проверка существования типа инфоблока
+     *
+     * @return bool
+     */
+    public static function isIblockTypeExists(): bool
     {
         $returnResult = false;
 
@@ -244,7 +269,12 @@ class QuickFiltersIblock
         return $returnResult;
     }
 
-    private static function isIblockExists(): bool
+    /**
+     * Проверка существования инфоблока
+     *
+     * @return bool
+     */
+    public static function isIblockExists(): bool
     {
         $returnResult = false;
 
