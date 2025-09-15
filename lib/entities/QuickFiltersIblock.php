@@ -249,6 +249,39 @@ class QuickFiltersIblock
     }
 
     /**
+     * Удаление типа инфоблока
+     */
+    public static function deleteIblockType(): void
+    {
+        $dbResult = CIBlockType::GetList(
+            ['SORT' => 'ASC'],
+            ['ID' => self::IBLOCK_TYPE_ID]
+        );
+
+        if ($arResult = $dbResult->Fetch()) {
+            CIBlockType::Delete(self::IBLOCK_TYPE_ID);
+        }
+    }
+
+    /**
+     * Удаление инфоблока
+     */
+    public static function deleteIblock(): void
+    {
+        $dbResult = CIBlock::GetList(
+            ['SORT' => 'ASC'],
+            [
+                'TYPE' => self::IBLOCK_TYPE_ID,
+                'CODE' => self::IBLOCK_CODE
+            ]
+        );
+
+        if ($arResult = $dbResult->Fetch()) {
+            CIBlock::Delete($arResult['ID']);
+        }
+    }
+
+    /**
      * Проверка существования типа инфоблока
      *
      * @return bool
