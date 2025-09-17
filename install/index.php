@@ -95,22 +95,31 @@ class digitmind_quickfilters extends CModule
     function DoUninstall(): void
     {
         global $APPLICATION;
+        global $step;
         global $errors;
 
         $errors = '';
+        $step = intval($step);
 
-        $this->deleteFiles();
-        $this->deleteDirectories();
+        if ($step < 2 && QuickFiltersIblock::isIblockExists()) {
+            $APPLICATION->IncludeAdminFile(
+                Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL'),
+                __DIR__ . '/unstep1.php'
+            );
+        } else {
+            $this->deleteFiles();
+            $this->deleteDirectories();
 
-        $this->UnRegisterEvents();
-        $this->UnInstallDB();
+            $this->UnRegisterEvents();
+            $this->UnInstallDB();
 
-        ModuleManager::unRegisterModule($this->MODULE_ID);
+            ModuleManager::unRegisterModule($this->MODULE_ID);
 
-        $APPLICATION->IncludeAdminFile(
-            Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL'),
-            __DIR__ . '/unstep.php'
-        );
+            $APPLICATION->IncludeAdminFile(
+                Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_DONE'),
+                __DIR__ . '/unstep2.php'
+            );
+        }
     }
 
     // Определяем место размещения модуля
