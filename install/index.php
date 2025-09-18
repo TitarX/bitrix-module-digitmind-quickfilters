@@ -107,6 +107,12 @@ class digitmind_quickfilters extends CModule
                 __DIR__ . '/unstep1.php'
             );
         } else {
+            // Удаление инфоблока
+            if (!empty($_POST['delete_iblock']) && $_POST['delete_iblock'] == 'Y') {
+                QuickFiltersIblock::deleteIblock();
+                QuickFiltersIblock::deleteIblockType();
+            }
+
             $this->deleteFiles();
             $this->deleteDirectories();
 

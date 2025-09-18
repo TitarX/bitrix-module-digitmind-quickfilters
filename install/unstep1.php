@@ -12,11 +12,11 @@ global $APPLICATION;
     <?= bitrix_sessid_post() ?>
     <input type="hidden" name="lang" value="<?= LANGUAGE_ID ?>">
     <input type="hidden" name="id" value="<?= MiscHelper::getModuleId() ?>">
-    <input type="hidden" name="install" value="Y">
+    <input type="hidden" name="uninstall" value="Y">
     <input type="hidden" name="step" value="2">
 
-    <input type="checkbox" name="create_iblock" id="create_iblock" value="Y" checked>
-    <label for="create_iblock"><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_CREATE_IBLOCK') ?></label>
+    <input type="checkbox" name="delete_iblock" id="delete_iblock" value="Y">
+    <label for="delete_iblock"><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_DELETE_IBLOCK') ?></label>
     <br><br>
-    <input type="submit" name="sbutton" value="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL_NEXT') ?>">
+    <input type="submit" name="sbutton" value="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_NEXT') ?>">
 </form>
