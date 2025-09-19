@@ -63,7 +63,7 @@ class digitmind_quickfilters extends CModule
                 __DIR__ . '/step2.php'
             );
         } else {
-            if ($step < 2) {
+            if ($step < 2 && !QuickFiltersIblock::isIblockExists()) {
                 $APPLICATION->IncludeAdminFile(
                     Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL'),
                     __DIR__ . '/step1.php'
