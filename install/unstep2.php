@@ -5,17 +5,24 @@ if (!check_bitrix_sessid()) {
 }
 
 use Bitrix\Main\Localization\Loc;
+use DigitMind\QuickFilters\Entities\QuickFiltersIblock;
 
 Loc::loadMessages(__FILE__);
 
 global $APPLICATION;
 
 if (empty($errors)) {
+    $messageDetails = Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_DET');
+    if (QuickFiltersIblock::isIblockTypeExists()) {
+        $messageDetails .= '. ';
+        $messageDetails .= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_IBLOCK_LINK');
+    }
+
     CAdminMessage::ShowMessage(
         [
             'TYPE' => 'OK',
             'MESSAGE' => Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS'),
-            'DETAILS' => Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_DET'),
+            'DETAILS' => $messageDetails,
             'HTML' => true
         ]
     );
