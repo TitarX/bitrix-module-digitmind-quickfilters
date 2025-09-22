@@ -8,12 +8,12 @@ Loc::loadMessages(__FILE__);
 global $APPLICATION;
 ?>
 
+<!-- Описание свойств инфоблока -->
+<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION') ?>
+
 <form method="post"
       action="<?= $APPLICATION->GetCurPage() ?>?lang=<?= LANGUAGE_ID ?>&mid=<?= MiscHelper::getModuleId() ?>">
     <?= bitrix_sessid_post() ?>
-
-    <input type="checkbox" name="create_iblock" id="create_iblock" value="Y" checked>
-    <label for="create_iblock"><?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_CREATE_IBLOCK') ?></label>
-    <br><br>
-    <input type="submit" name="sbutton" value="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_MODULE_INSTALL_NEXT') ?>">
+    <input type="submit" name="recreate_iblock"
+           value="<?= Loc::getMessage('DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_BUTTON') ?>">
 </form>
