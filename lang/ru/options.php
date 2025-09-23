@@ -1,11 +1,15 @@
 <?php
 
-$MESS['DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_BUTTON'] = 'Пересоздать инфоблок и свойства';
+$MESS['DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_BUTTON'] = 'Пересоздать инфоблок модуля';
+$MESS['DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_CONFIRM'] = 'Подтверждаете пересоздание инфоблока модуля';
 
-$MESS['DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION'] = "<div style=\"margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;\">
-    <b>Описание полей и свойств инфоблока модуля:</b>
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_IBLOCK_RECREATED_SUCCESS'] = 'Инфоблок модуля успешно пересоздан';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_IBLOCK_RECREATED_FAIL'] = 'Не удалось пересоздать инфоблок модуля';
+
+$MESS['DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION'] = "<div style=\"margin: 20px 0; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;\">
+    <b>Описание свойств инфоблока модуля:</b>
     <ul style=\"margin-top: 10px;\">
-        <li>Поле <b>NAME</b> — URL страницы фильтра, по которому будет доступен контент.</li>
+        <li>Свойство <b>PAGE_URL</b> (строка, обязательно) — URL страницы фильтра, на которой будет выведен контент.</li>
         <li>Свойство <b>CONTENT_URL</b> (строка, обязательно) — URL страницы контента (URL страницы сайта, содержимое которой нужно вывести по запросу URL фильтра).</li>
         <li>Свойство <b>META_H1</b> (строка, необязательно) — Заголовок страницы H1.</li>
         <li>Свойство <b>META_TITLE</b> (строка, необязательно) — Заголовой браузера (Title).</li>

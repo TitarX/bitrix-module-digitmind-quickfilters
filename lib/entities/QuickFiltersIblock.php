@@ -31,12 +31,23 @@ class QuickFiltersIblock
         return [
             [
                 'IBLOCK_ID' => $iblockId,
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME'),
+                'SORT' => '100',
+                'CODE' => 'PAGE_URL',
+                'PROPERTY_TYPE' => 'S',
+                'MULTIPLE' => 'N',
+                'IS_REQUIRED' => 'Y',
+                'HINT' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME_HINT')
+            ],
+            [
+                'IBLOCK_ID' => $iblockId,
                 'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_CONTENT_URL_NAME'),
                 'SORT' => '100',
                 'CODE' => 'CONTENT_URL',
                 'PROPERTY_TYPE' => 'S',
                 'MULTIPLE' => 'N',
-                'IS_REQUIRED' => 'Y'
+                'IS_REQUIRED' => 'Y',
+                'HINT' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_CONTENT_URL_NAME_HINT')
             ],
             [
                 'IBLOCK_ID' => $iblockId,
