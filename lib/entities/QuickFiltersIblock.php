@@ -2,6 +2,8 @@
 
 namespace DigitMind\QuickFilters\Entities;
 
+use Bitrix\Main\LoaderException;
+use CAdminMessage;
 use CIBlock;
 use CIBlockProperty;
 use CIBlockType;
@@ -10,8 +12,21 @@ use Bitrix\Main\Application;
 use Bitrix\Main\Localization\Loc;
 use DigitMind\QuickFilters\Helpers\MiscHelper;
 
-Loader::includeModule('iblock');
-Loader::includeModule('digitmind.quickfilters');
+try {
+    Loader::includeModule('iblock');
+} catch (LoaderException $e) {
+    CAdminMessage::ShowMessage(
+        Loc::getMessage('DIGITMIND_QUICKFILTERS_INCLUDE_MODULE_FAIL', ['#MODULE#' => 'iblock'])
+    );
+    exit;
+}
+
+try {
+    Loader::includeModule('digitmind.quickfilters');
+} catch (LoaderException $e) {
+    CAdminMessage::ShowMessage(Loc::getMessage('DIGITMIND_QUICKFILTERS_INCLUDE_CURRENT_MODULE_FAIL'));
+    exit;
+}
 
 Loc::loadMessages(__FILE__);
 

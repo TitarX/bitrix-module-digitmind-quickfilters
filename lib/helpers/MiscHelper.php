@@ -5,19 +5,26 @@ namespace DigitMind\QuickFilters\Helpers;
 use Bitrix\Main\Application;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
+use Bitrix\Main\LoaderException;
+use Bitrix\Main\Localization\Loc;
 use CAdminMessage;
 use CSite;
 
-Loader::includeModule('digitmind.quickfilters');
+try {
+    Loader::includeModule('digitmind.quickfilters');
+} catch (LoaderException $e) {
+    CAdminMessage::ShowMessage(Loc::getMessage('DIGITMIND_QUICKFILTERS_INCLUDE_CURRENT_MODULE_FAIL'));
+    exit;
+}
 
 class MiscHelper
 {
-    public static function getModuleId()
+    public static function getModuleId(): string
     {
         return 'digitmind.quickfilters';
     }
 
-    public static function getAssetsPath($type)
+    public static function getAssetsPath($type): string
     {
         $moduleId = self::getModuleId();
         $assetsPath = '';
@@ -41,7 +48,7 @@ class MiscHelper
         return $assetsPath;
     }
 
-    public static function getProgressBar($total, $value, $message)
+    public static function getProgressBar($total, $value, $message): void
     {
         $total = intval($total);
         $value = intval($value);
@@ -64,7 +71,7 @@ class MiscHelper
         );
     }
 
-    public static function getModuleUploadDirPath()
+    public static function getModuleUploadDirPath(): string
     {
         $uploadDirectoryName = Option::get('main', 'upload_dir');
         $moduleId = GetModuleID(__FILE__);
@@ -72,7 +79,7 @@ class MiscHelper
         return "/{$uploadDirectoryName}/{$moduleId}";
     }
 
-    public static function getModuleUploadDirFullPath()
+    public static function getModuleUploadDirFullPath(): string
     {
         $documentRoot = Application::getDocumentRoot();
         $moduleUploadDirPath = self::getModuleUploadDirPath();
@@ -80,7 +87,7 @@ class MiscHelper
         return "{$documentRoot}{$moduleUploadDirPath}";
     }
 
-    public static function removeGetParameters($urlString)
+    public static function removeGetParameters($urlString): string
     {
         $urlString = trim($urlString);
         list($path) = explode('?', $urlString);
@@ -95,7 +102,7 @@ class MiscHelper
      *
      * @return ?bool
      */
-    public static function checkUrl200($url, $includeRedirects = true)
+    public static function checkUrl200($url, $includeRedirects = true): ?bool
     {
         $curl = curl_init($url);
 
@@ -132,7 +139,7 @@ class MiscHelper
      *
      * @return bool
      */
-    public static function checkStringContains($text, $textPieces)
+    public static function checkStringContains($text, $textPieces): bool
     {
         $result = false;
 
@@ -154,7 +161,7 @@ class MiscHelper
      *
      * @return bool
      */
-    public static function checkStringContainsRegex($text, $textPieces)
+    public static function checkStringContainsRegex($text, $textPieces): bool
     {
         $result = false;
 
@@ -174,7 +181,7 @@ class MiscHelper
      * @param $text
      * @return mixed|string
      */
-    public static function checkFirstSlash($text)
+    public static function checkFirstSlash($text): mixed
     {
         if (!empty($text)) {
             if (preg_match('/^(?:(http:\/\/)|(https:\/\/)|(\/))/ui', $text) !== 1) {
@@ -190,7 +197,7 @@ class MiscHelper
      *
      * @return string
      */
-    public static function getFullCurUrl()
+    public static function getFullCurUrl(): string
     {
         $request = Application::getInstance()->getContext()->getRequest();
         $server = Application::getInstance()->getContext()->getServer();

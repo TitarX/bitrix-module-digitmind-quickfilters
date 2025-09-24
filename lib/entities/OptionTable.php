@@ -5,12 +5,20 @@ namespace DigitMind\QuickFilters\Entities;
 use Bitrix\Main\Application;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Loader;
+use Bitrix\Main\LoaderException;
+use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\Type;
 use Bitrix\Main\Entity;
 use Bitrix\Main\SystemException;
+use CAdminMessage;
 
-Loader::includeModule('digitmind.quickfilters');
+try {
+    Loader::includeModule('digitmind.quickfilters');
+} catch (LoaderException $e) {
+    CAdminMessage::ShowMessage(Loc::getMessage('DIGITMIND_QUICKFILTERS_INCLUDE_CURRENT_MODULE_FAIL'));
+    exit;
+}
 
 class OptionTable extends Entity\DataManager
 {

@@ -12,7 +12,7 @@ $MESS['DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION'] = "<div style=\"margin: 20px 
         <li>Свойство <b>PAGE_URL</b> (строка, обязательно) — URL страницы фильтра, на которой будет выведен контент.</li>
         <li>Свойство <b>CONTENT_URL</b> (строка, обязательно) — URL страницы контента (URL страницы сайта, содержимое которой нужно вывести по запросу URL фильтра).</li>
         <li>Свойство <b>META_H1</b> (строка, необязательно) — Заголовок страницы H1.</li>
-        <li>Свойство <b>META_TITLE</b> (строка, необязательно) — Заголовой браузера (Title).</li>
+        <li>Свойство <b>META_TITLE</b> (строка, необязательно) — Заголовок браузера (Title).</li>
         <li>Свойство <b>META_KEYWORDS</b> (строка, необязательно) — Meta Keywords.</li>
         <li>Свойство <b>META_DESCRIPTION</b> (строка, необязательно) — Meta Description.</li>
         <li>Свойство <b>META_CANONICAL</b> (строка, необязательно) — Meta Canonical.</li>

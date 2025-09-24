@@ -1,5 +1,8 @@
 <?php
 
+$MESS['DIGITMIND_QUICKFILTERS_INCLUDE_CURRENT_MODULE_FAIL'] = 'Не удалось подключить модуль digitmind.quickfilters';
+$MESS['DIGITMIND_QUICKFILTERS_INCLUDE_MODULE_FAIL'] = 'Не удалось подключить модуль #MODULE#';
+
 $MESS['DIGITMIND_QUICKFILTERS_IBLOCK_NAME'] = 'Быстрые фильтры';
 
 $MESS['DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME'] = 'URL страницы фильтра';

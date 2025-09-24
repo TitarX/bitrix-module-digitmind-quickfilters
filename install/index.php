@@ -12,7 +12,11 @@ Loc::loadMessages(__FILE__);
 
 class digitmind_quickfilters extends CModule
 {
-    var $exclusionAdminFiles;
+    var $MODULE_ID;
+    var $MODULE_NAME;
+    var $MODULE_DESCRIPTION;
+    var $MODULE_VERSION;
+    var $MODULE_VERSION_DATE;
 
     function __construct()
     {
@@ -36,11 +40,6 @@ class digitmind_quickfilters extends CModule
                 $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
             }
         }
-
-        $this->exclusionAdminFiles = [
-            '..',
-            '.'
-        ];
     }
 
     /**
@@ -184,14 +183,6 @@ class digitmind_quickfilters extends CModule
 
     private function copyFiles($documentRoot): void
     {
-        CopyDirFiles(
-            __DIR__ . '/pages/admin/digitmind_quickfilters_worker.php',
-            "{$documentRoot}/bitrix/admin/digitmind_quickfilters_worker.php",
-            true,
-            true,
-            false
-        );
-
         CopyDirFiles(__DIR__ . '/js', "{$documentRoot}/bitrix/js/{$this->MODULE_ID}", true, true, false);
         CopyDirFiles(__DIR__ . '/css', "{$documentRoot}/bitrix/css/{$this->MODULE_ID}", true, true, false);
         CopyDirFiles(__DIR__ . '/images', "{$documentRoot}/bitrix/images/{$this->MODULE_ID}", true, true, false);
@@ -199,8 +190,6 @@ class digitmind_quickfilters extends CModule
 
     private function deleteFiles(): void
     {
-        DeleteDirFilesEx('/bitrix/admin/digitmind_quickfilters_worker.php');
-
         DeleteDirFilesEx("/bitrix/js/{$this->MODULE_ID}");
         DeleteDirFilesEx("/bitrix/css/{$this->MODULE_ID}");
         DeleteDirFilesEx("/bitrix/images/{$this->MODULE_ID}");
