@@ -176,7 +176,7 @@ class MiscHelper
     }
 
     /**
-     * Проверка на необходимость добавления начального слеша, и добавление при необходимости
+     * Проверка на необходимость добавления начального слеша
      *
      * @param $text
      * @return mixed|string
@@ -184,7 +184,7 @@ class MiscHelper
     public static function checkFirstSlash($text): mixed
     {
         if (!empty($text)) {
-            if (preg_match('/^(?:(http:\/\/)|(https:\/\/)|(\/))/ui', $text) !== 1) {
+            if (preg_match('/^(?:(http:\/\/)|(https:\/\/)|(\/))/ui', $text) === 0) {
                 $text = "/$text";
             }
         }
@@ -328,5 +328,24 @@ class MiscHelper
         }
 
         return $result;
+    }
+
+    /**
+     * Нормализация пути URL
+     *
+     * 1: Удаление index.php
+     * 2: Удаление протокола и домена
+     * 3: Исправление двойного слеша на одиночный
+     * 4: Удаление конечного слеша
+     * 5: Добавление начального слеша
+     *
+     * @param string $url
+     * @return string
+     */
+    public static function nomalizeUrlPath(string $url): string
+    {
+        //
+
+        return $url;
     }
 }

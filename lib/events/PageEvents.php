@@ -74,12 +74,21 @@ class PageEvents
 
     private static function prepareCurrentUrl(string $currentUrl): string
     {
-        //
+        // file_put_contents(__DIR__ . '/try.txt', print_r($currentUrl, true), FILE_APPEND);
+        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
+        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
+        // file_put_contents(__DIR__ . '/try.txt', '--------------------------------', FILE_APPEND);
+        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
+        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
+
+        return '';
     }
 
     private static function fillData(string $currentUrl): bool
     {
         //
+
+        return false;
     }
 
     private static function resetData(): void
