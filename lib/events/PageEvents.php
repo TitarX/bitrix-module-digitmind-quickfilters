@@ -17,14 +17,26 @@ try {
 
 class PageEvents
 {
+    private static string $pageUrl = '';
+    private static string $contentUrl = '';
+    private static string $metaH1 = '';
+    private static string $metaTitle = '';
+    private static string $metaKeywords = '';
+    private static string $metaDescription = '';
+    private static string $metaCanonical = '';
+    private static string $httpCode = '';
+    private static string $bc = '';
+    private static bool $isBcLink = false;
+    private static bool $isQuickFilter = false;
+
     public static function checkQuickFilter(): void
     {
-        // Вывод результата фильтра каталога по URL несуществующего (произвольного) раздела каталога
-        if ($_SERVER['REQUEST_URI'] == '/about/contacts.php') {
-            $newContentUrl = 'https://zaim.site/for-clients/special/';
+        $currentUrl = self::prepareCurrentUrl($_SERVER['REQUEST_URI']);
+        $isQuickFilter = self::fillData($currentUrl);
 
-            CHTTP::SetStatus('200 OK');
-            readfile($newContentUrl);
+        if ($isQuickFilter) {
+            CHTTP::SetStatus(self::$httpCode);
+            readfile(self::$contentUrl);
             exit();
         }
     }
@@ -33,14 +45,55 @@ class PageEvents
     {
         global $APPLICATION;
 
-        if ($_SERVER['REQUEST_URI'] == '/catalog/sportswear/filter/price-base-from-2428-to-2636/color_ref-is-white/sizes_clothes-is-a11f96c3b88d222460d9796067d28b0c/apply/') {
-            $APPLICATION->SetTitle('Проверка h1'); // h1
-            $APPLICATION->SetPageProperty('title', 'Проверка title'); // title
-            $APPLICATION->SetPageProperty('description', 'Проверка description'); // description
-            $APPLICATION->SetPageProperty('keywords', 'Проверка keywords'); // keywords
-            $APPLICATION->SetPageProperty('canonical', 'Проверка canonical'); // canonical
+        if (self::$isQuickFilter) {
+            if (!empty(self::$metaH1)) {
+                $APPLICATION->SetTitle(self::$metaH1); // h1
+            }
 
-            $APPLICATION->AddChainItem('Проверка breadcrumb', '/catalog/pants/'); // breadcrumb
+            if (!empty(self::$metaTitle)) {
+                $APPLICATION->SetPageProperty('title', self::$metaTitle); // title
+            }
+
+            if (!empty(self::$metaKeywords)) {
+                $APPLICATION->SetPageProperty('keywords', self::$metaKeywords); // keywords
+            }
+
+            if (!empty(self::$metaDescription)) {
+                $APPLICATION->SetPageProperty('description', self::$metaDescription); // description
+            }
+
+            if (!empty(self::$metaCanonical)) {
+                $APPLICATION->SetPageProperty('canonical', self::$metaCanonical); // canonical
+            }
+
+            if (!empty(self::$bc)) {
+                $APPLICATION->AddChainItem(self::$bc, self::$isBcLink ? self::$pageUrl : ''); // breadcrumb
+            }
         }
+    }
+
+    private static function prepareCurrentUrl(string $currentUrl): string
+    {
+        //
+    }
+
+    private static function fillData(string $currentUrl): bool
+    {
+        //
+    }
+
+    private static function resetData(): void
+    {
+        self::$pageUrl = '';
+        self::$contentUrl = '';
+        self::$metaH1 = '';
+        self::$metaTitle = '';
+        self::$metaKeywords = '';
+        self::$metaDescription = '';
+        self::$metaCanonical = '';
+        self::$httpCode = '';
+        self::$bc = '';
+        self::$isBcLink = false;
+        self::$isQuickFilter = false;
     }
 }

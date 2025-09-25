@@ -284,7 +284,7 @@ class QuickFiltersIblock
             ['ID' => self::IBLOCK_TYPE_ID]
         );
 
-        if ($arResult = $dbResult->Fetch()) {
+        if ($dbResult->Fetch()) {
             CIBlockType::Delete(self::IBLOCK_TYPE_ID);
         }
     }

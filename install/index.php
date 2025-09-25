@@ -127,8 +127,8 @@ class digitmind_quickfilters extends CModule
         }
     }
 
-    // Определяем место размещения модуля
-    public function GetPath($notDocumentRoot = false): string
+    // Определение места размещения модуля
+    public function getPath($notDocumentRoot = false): string
     {
         if ($notDocumentRoot) {
             return str_ireplace(Application::getDocumentRoot(), '', dirname(__DIR__));
