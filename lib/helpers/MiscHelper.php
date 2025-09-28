@@ -337,15 +337,76 @@ class MiscHelper
      * 2: Удаление протокола и домена
      * 3: Исправление двойного слеша на одиночный
      * 4: Удаление конечного слеша
-     * 5: Добавление начального слеша
+     * 5: Добавление начального слеша, если его нет
      *
      * @param string $url
      * @return string
      */
     public static function nomalizeUrlPath(string $url): string
     {
-        //
+        // Сохраняем query-параметры, обрабатываем только путь.
+        $raw = trim($url);
 
-        return $url;
+        // Выделяем query (если он до фрагмента) и убираем query/fragment из строки для обработки пути
+        $posHash = strpos($raw, '#');
+        $posQuery = strpos($raw, '?');
+
+        $queryPart = '';
+        if ($posQuery !== false && ($posHash === false || $posQuery < $posHash)) {
+            $queryEnd = ($posHash !== false) ? $posHash : strlen($raw);
+            $queryPart = substr($raw, $posQuery, $queryEnd - $posQuery); // включая ведущий '?'
+        }
+
+        $cutPos = null;
+        if ($posHash !== false && $posQuery !== false) {
+            $cutPos = min($posHash, $posQuery);
+        } elseif ($posHash !== false) {
+            $cutPos = $posHash;
+        } elseif ($posQuery !== false) {
+            $cutPos = $posQuery;
+        }
+        $work = ($cutPos !== null) ? substr($raw, 0, $cutPos) : $raw;
+
+        // Нормализуем обратные слэши только в части пути
+        $work = str_replace('\\', '/', $work);
+
+        $path = '';
+
+        // Удаление протокола и домена (извлекаем путь из абсолютного URL или домена без схемы)
+        if (preg_match('#^[a-z][a-z0-9+\-.]*://#i', $work)) {
+            // Абсолютный URL со схемой
+            $path = parse_url($work, PHP_URL_PATH) ?? '';
+        } elseif (str_starts_with($work, '//')) {
+            // URL вида //example.com/path
+            $path = parse_url('http:' . $work, PHP_URL_PATH) ?? '';
+        } elseif ($work !== '' && $work[0] !== '/' && preg_match('#^[a-z0-9.-]+(?::\d+)?(?:/|$)#i', $work)) {
+            // Похоже на домен без схемы: example.com или example.com/path
+            $firstSlashPos = strpos($work, '/');
+            if ($firstSlashPos !== false) {
+                $path = substr($work, $firstSlashPos);
+            }
+        } else {
+            // Уже путь
+            $path = $work;
+        }
+
+        // Исправление множественных слэшей
+        $path = preg_replace('#/+#', '/', $path);
+
+        // Удаление завершающего сегмента index.php (с необязательным завершающим слэшем)
+        $path = preg_replace('#(?i)(?:^|/)index\.php/?$#', '', $path);
+
+        // Удаление конечного слэша (кроме корня)
+        if ($path !== '/') {
+            $path = rtrim($path, '/');
+        }
+
+        // Добавление начального слэша, если его нет
+        if ($path === '' || $path[0] !== '/') {
+            $path = '/' . ltrim($path, '/');
+        }
+
+        // Собираем обратно путь + исходные GET-параметры
+        return $path . $queryPart;
     }
 }
