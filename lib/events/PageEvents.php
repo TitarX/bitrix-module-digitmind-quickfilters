@@ -7,6 +7,7 @@ use Bitrix\Main\LoaderException;
 use Bitrix\Main\Localization\Loc;
 use CAdminMessage;
 use CHTTP;
+use DigitMind\QuickFilters\Helpers\MiscHelper;
 
 try {
     Loader::includeModule('digitmind.quickfilters');
@@ -29,10 +30,18 @@ class PageEvents
     private static bool $isBcLink = false;
     private static bool $isQuickFilter = false;
 
+    /**
+     * Обработчик события OnPageStart, начала исполняемого раздела пролога сайта
+     *
+     * Подстановка содержимого страницы быстрого фильтра, если текущий URL соответствует
+     * и задание кода HTTP-ответа
+     *
+     * @return void
+     */
     public static function checkQuickFilter(): void
     {
-        $currentUrl = self::prepareCurrentUrl($_SERVER['REQUEST_URI']);
-        $isQuickFilter = self::fillData($currentUrl);
+        list($currentUrlPath, $currentUrlQuery) = MiscHelper::nomalizeUrlPath($_SERVER['REQUEST_URI']);
+        $isQuickFilter = self::fillData($currentUrlPath, $currentUrlQuery);
 
         if ($isQuickFilter) {
             CHTTP::SetStatus(self::$httpCode);
@@ -41,6 +50,13 @@ class PageEvents
         }
     }
 
+    /**
+     * Обработчик события OnEpilog, завершения обработки визуальной части эпилога сайта
+     *
+     * Установка мета-тегов и хлебных крошек
+     *
+     * @return void
+     */
     public static function setMeta(): void
     {
         global $APPLICATION;
@@ -72,25 +88,26 @@ class PageEvents
         }
     }
 
-    private static function prepareCurrentUrl(string $currentUrl): string
-    {
-        // file_put_contents(__DIR__ . '/try.txt', print_r($currentUrl, true), FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', '--------------------------------', FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
-        // file_put_contents(__DIR__ . '/try.txt', PHP_EOL, FILE_APPEND);
-
-        return '';
-    }
-
-    private static function fillData(string $currentUrl): bool
+    /**
+     * Поиск элемента инфоблока, соответствующего текущему URL, и заполнение полей при нахождении
+     *
+     * @param string $currentUrlPath
+     * @param string $currentUrlQuery
+     *
+     * @return bool
+     */
+    private static function fillData(string $currentUrlPath, string $currentUrlQuery): bool
     {
         //
 
         return false;
     }
 
+    /**
+     * Сброс заполненных полей
+     *
+     * @return void
+     */
     private static function resetData(): void
     {
         self::$pageUrl = '';

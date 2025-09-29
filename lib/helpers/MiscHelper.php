@@ -179,6 +179,7 @@ class MiscHelper
      * Проверка на необходимость добавления начального слеша
      *
      * @param $text
+     *
      * @return mixed|string
      */
     public static function checkFirstSlash($text): mixed
@@ -332,7 +333,6 @@ class MiscHelper
 
     /**
      * Нормализация пути URL
-     *
      * 1: Удаление index.php
      * 2: Удаление протокола и домена
      * 3: Исправление двойного слеша на одиночный
@@ -340,9 +340,10 @@ class MiscHelper
      * 5: Добавление начального слеша, если его нет
      *
      * @param string $url
-     * @return string
+     *
+     * @return array
      */
-    public static function nomalizeUrlPath(string $url): string
+    public static function nomalizeUrlPath(string $url): array
     {
         // Сохраняем query-параметры, обрабатываем только путь.
         $raw = trim($url);
@@ -406,7 +407,7 @@ class MiscHelper
             $path = '/' . ltrim($path, '/');
         }
 
-        // Собираем обратно путь + исходные GET-параметры
-        return $path . $queryPart;
+        // Путь и исходные GET-параметры
+        return [$path, $queryPart];
     }
 }
