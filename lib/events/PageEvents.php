@@ -7,6 +7,7 @@ use Bitrix\Main\LoaderException;
 use Bitrix\Main\Localization\Loc;
 use CAdminMessage;
 use CHTTP;
+use DigitMind\QuickFilters\Entities\QuickFiltersIblock;
 use DigitMind\QuickFilters\Helpers\MiscHelper;
 
 try {
@@ -98,7 +99,10 @@ class PageEvents
      */
     private static function fillData(string $currentUrlPath, string $currentUrlQuery): bool
     {
-        //
+        $matchDatas = QuickFiltersIblock::getListByPageUrlContains($currentUrlPath);
+        if (!empty($matchDatas)) {
+            //
+        }
 
         return false;
     }

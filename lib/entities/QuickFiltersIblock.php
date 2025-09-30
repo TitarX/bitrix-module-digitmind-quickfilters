@@ -5,6 +5,7 @@ namespace DigitMind\QuickFilters\Entities;
 use Bitrix\Main\LoaderException;
 use CAdminMessage;
 use CIBlock;
+use CIBlockElement;
 use CIBlockProperty;
 use CIBlockType;
 use Bitrix\Main\Loader;
@@ -41,7 +42,7 @@ class QuickFiltersIblock
      *
      * @return array<int, array<string, mixed>>
      */
-    private static function getIblockPropertyValues(string|int $iblockId): array
+    private static function getIblockPropertyValues(string|int $iblockId = 0): array
     {
         return [
             [
@@ -167,6 +168,22 @@ class QuickFiltersIblock
                 'VALUES' => MiscHelper::getHttpCodePropertyValues()
             ]
         ];
+    }
+
+    /**
+     * Возвращает коды свойств инфоблока
+     *
+     * @return array<int, string>
+     */
+    public static function getIblockPropertyCodesForFilter(): array
+    {
+        $result = [];
+
+        foreach (self::getIblockPropertyValues() as $property) {
+            $result[] = 'PROPERTY_' . $property['CODE'];
+        }
+
+        return $result;
     }
 
     /**
@@ -375,13 +392,34 @@ class QuickFiltersIblock
      * Получение списка элементов инфоблока по значению свойства PAGE_URL
      *
      * @param string $pageUrl
+     *
      * @return array
      */
-    public static function getListByPageUrl(string $pageUrl): array
+    public static function getListByPageUrlContains(string $pageUrl): array
     {
         $result = [];
 
-        //
+        $arSelect = array_merge(
+            ['ID', 'IBLOCK_ID'],
+            self::getIblockPropertyCodesForFilter()
+        );
+
+        $dbResult = CIBlockElement::GetList(
+            ['SORT' => 'ASC'],
+            [
+                'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
+                'IBLOCK_CODE' => self::IBLOCK_CODE,
+                'PROPERTY_PAGE_URL' => '%' . trim($pageUrl, '/') . '%',
+                'ACTIVE' => 'Y'
+            ],
+            false,
+            false,
+            $arSelect
+        );
+
+        while ($arElement = $dbResult->Fetch()) {
+            $result[] = $arElement;
+        }
 
         return $result;
     }
