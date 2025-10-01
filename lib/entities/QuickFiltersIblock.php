@@ -121,9 +121,9 @@ class QuickFiltersIblock
             ],
             [
                 'IBLOCK_ID' => $iblockId,
-                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_BC_AS_LINK_NAME'),
+                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_IS_BC_LINK_NAME'),
                 'SORT' => '800',
-                'CODE' => 'BC_AS_LINK',
+                'CODE' => 'IS_BC_LINK',
                 'PROPERTY_TYPE' => 'L',
                 'MULTIPLE' => 'N',
                 'IS_REQUIRED' => 'N',
