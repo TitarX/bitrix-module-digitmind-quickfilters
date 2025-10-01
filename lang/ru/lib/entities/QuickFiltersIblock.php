@@ -5,8 +5,6 @@ $MESS['DIGITMIND_QUICKFILTERS_INCLUDE_MODULE_FAIL'] = 'Не удалось по�
 
 $MESS['DIGITMIND_QUICKFILTERS_IBLOCK_NAME'] = 'Быстрые фильтры';
 
-$MESS['DIGITMIND_QUICKFILTERS_PROP_CHECK_GET_PAR_NAME'] = 'Учитывать строку GET-параметров';
-$MESS['DIGITMIND_QUICKFILTERS_PROP_CHECK_GET_PAR_NAME_HINT'] = 'При отмеченной опции, в соответствии URL подстрока после знака вопроса будет учитываться, иначе обрезаться';
 $MESS['DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME'] = 'URL страницы фильтра';
 $MESS['DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME_HINT'] = 'URL страницы, на которой будет выведен контент.';
 $MESS['DIGITMIND_QUICKFILTERS_PROP_CONTENT_URL_NAME'] = 'URL страницы контента';

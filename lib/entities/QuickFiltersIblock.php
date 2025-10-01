@@ -47,25 +47,6 @@ class QuickFiltersIblock
         return [
             [
                 'IBLOCK_ID' => $iblockId,
-                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_CHECK_GET_PAR_NAME'),
-                'SORT' => '50',
-                'CODE' => 'CHECK_GET_PAR',
-                'PROPERTY_TYPE' => 'L',
-                'MULTIPLE' => 'N',
-                'IS_REQUIRED' => 'N',
-                'LIST_TYPE' => 'C',
-                'VALUES' => [
-                    [
-                        'VALUE' => 'Y',
-                        'DEF' => 'Y',
-                        'SORT' => 100,
-                        'XML_ID' => 'Y'
-                    ]
-                ],
-                'HINT' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_CHECK_GET_PAR_NAME_HINT')
-            ],
-            [
-                'IBLOCK_ID' => $iblockId,
                 'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_PAGE_URL_NAME'),
                 'SORT' => '100',
                 'CODE' => 'PAGE_URL',
