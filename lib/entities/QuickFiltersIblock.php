@@ -156,7 +156,7 @@ class QuickFiltersIblock
      *
      * @return array<int, string>
      */
-    public static function getIblockPropertyCodesForFilter(): array
+    private static function getIblockPropertyCodesForFilter(): array
     {
         $result = [];
 
@@ -370,20 +370,15 @@ class QuickFiltersIblock
     }
 
     /**
-     * Получение списка элементов инфоблока по значению свойства PAGE_URL
+     * Поиск элемента инфоблока, соответствующего переданному строковому значению
      *
      * @param string $pageUrl
      *
-     * @return array
+     * @return string|int
      */
-    public static function getListByPageUrlContains(string $pageUrl): array
+    private static function findByPageUrl(string $pageUrl): string|int
     {
-        $result = [];
-
-        $arSelect = array_merge(
-            ['ID', 'IBLOCK_ID'],
-            self::getIblockPropertyCodesForFilter()
-        );
+        $elementId = '';
 
         $dbResult = CIBlockElement::GetList(
             ['SORT' => 'ASC'],
@@ -395,11 +390,82 @@ class QuickFiltersIblock
             ],
             false,
             false,
-            $arSelect
+            ['IBLOCK_ID', 'ID', 'PROPERTY_PAGE_URL']
         );
 
         while ($arElement = $dbResult->Fetch()) {
-            $result[] = $arElement;
+            list($pageUrlFromProperty) = MiscHelper::nomalizeUrlPath($arElement['PROPERTY_PAGE_URL']);
+            if ($pageUrlFromProperty === $pageUrl) {
+                $elementId = $arElement['ID'];
+                break;
+            }
+        }
+
+        return $elementId;
+    }
+
+    /**
+     * Получение списка элементов инфоблока по значению свойства PAGE_URL
+     *
+     * @param string $pageUrl
+     *
+     * @return array
+     */
+    public static function getByPageUrl(string $pageUrl): array
+    {
+        $result = [];
+
+        $elementId = self::findByPageUrl($pageUrl);
+        if (!empty($elementId)) {
+            $arSelect = array_merge(
+                ['ID', 'IBLOCK_ID'],
+                self::getIblockPropertyCodesForFilter()
+            );
+
+            $dbResult = CIBlockElement::GetList(
+                ['SORT' => 'ASC'],
+                [
+                    'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
+                    'IBLOCK_CODE' => self::IBLOCK_CODE,
+                    'ID' => $elementId
+                ],
+                false,
+                false,
+                $arSelect
+            );
+
+            if ($arElement = $dbResult->Fetch()) {
+                if (!empty($arElement['PAGE_URL_VALUE'])) {
+                    $result['PAGE_URL'] = $arElement['PAGE_URL_VALUE'];
+                }
+                if (!empty($arElement['CONTENT_URL_VALUE'])) {
+                    $result['CONTENT_URL'] = $arElement['CONTENT_URL_VALUE'];
+                }
+                if (!empty($arElement['META_H1_VALUE'])) {
+                    $result['META_H1'] = $arElement['META_H1_VALUE'];
+                }
+                if (!empty($arElement['META_TITLE_VALUE'])) {
+                    $result['META_TITLE'] = $arElement['META_TITLE_VALUE'];
+                }
+                if (!empty($arElement['META_KEYWORDS_VALUE'])) {
+                    $result['META_KEYWORDS'] = $arElement['META_KEYWORDS_VALUE'];
+                }
+                if (!empty($arElement['META_DESCRIPTION_VALUE'])) {
+                    $result['META_DESCRIPTION'] = $arElement['META_DESCRIPTION_VALUE'];
+                }
+                if (!empty($arElement['META_CANONICAL_VALUE'])) {
+                    $result['META_CANONICAL'] = $arElement['META_CANONICAL_VALUE'];
+                }
+                if (!empty($arElement['HTTP_CODE_VALUE'])) {
+                    $result['HTTP_CODE'] = $arElement['HTTP_CODE_VALUE'];
+                }
+                if (!empty($arElement['BC_NAME_VALUE'])) {
+                    $result['BC_NAME'] = $arElement['BC_NAME_VALUE'];
+                }
+                if (!empty($arElement['IS_BC_LINK_VALUE'])) {
+                    $result['IS_BC_LINK'] = $arElement['IS_BC_LINK_VALUE'];
+                }
+            }
         }
 
         return $result;
