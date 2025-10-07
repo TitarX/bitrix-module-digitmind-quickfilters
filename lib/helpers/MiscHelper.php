@@ -194,11 +194,11 @@ class MiscHelper
     }
 
     /**
-     * Возвращает полный URL текущей страницы
+     * Возвращает URL текущего хоста с протоколом
      *
      * @return string
      */
-    public static function getFullCurUrl(): string
+    public static function getCurHostUrl(): string
     {
         $request = Application::getInstance()->getContext()->getRequest();
         $server = Application::getInstance()->getContext()->getServer();
@@ -210,7 +210,19 @@ class MiscHelper
             $host = 'http://';
         }
 
-        $host .= $server->getHttpHost();
+        return $host . $server->getHttpHost();
+    }
+
+    /**
+     * Возвращает полный URL текущей страницы
+     *
+     * @return string
+     */
+    public static function getFullCurUrl(): string
+    {
+        $request = Application::getInstance()->getContext()->getRequest();
+
+        $host = self::getCurHostUrl();
         $requestUri = $request->getRequestUri();
 
         return "{$host}{$requestUri}";
@@ -409,5 +421,20 @@ class MiscHelper
 
         // Путь и исходные GET-параметры
         return [$path, $queryPart];
+    }
+
+    /**
+     * Нормализация абсолютного URL текущего сайта
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    public static function nomalizeFullCurUrl(string $url): string
+    {
+        $urlPath = self::nomalizeUrlPath($url);
+        $curHost = self::getCurHostUrl();
+
+        return $curHost . implode('', $urlPath);
     }
 }

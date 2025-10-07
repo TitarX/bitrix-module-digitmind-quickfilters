@@ -380,25 +380,28 @@ class QuickFiltersIblock
     {
         $elementId = '';
 
-        $dbResult = CIBlockElement::GetList(
-            ['SORT' => 'ASC'],
-            [
-                'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
-                'IBLOCK_CODE' => self::IBLOCK_CODE,
-                'PROPERTY_PAGE_URL' => '%' . trim($pageUrl, '/') . '%',
-                'ACTIVE' => 'Y'
-            ],
-            false,
-            false,
-            ['IBLOCK_ID', 'ID', 'PROPERTY_PAGE_URL']
-        );
+        $pageUrlTrim = trim($pageUrl, '/');
+        if (!empty($pageUrlTrim)) {
+            $dbResult = CIBlockElement::GetList(
+                ['SORT' => 'ASC'],
+                [
+                    'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
+                    'IBLOCK_CODE' => self::IBLOCK_CODE,
+                    'PROPERTY_PAGE_URL' => '%' . $pageUrlTrim . '%',
+                    'ACTIVE' => 'Y'
+                ],
+                false,
+                false,
+                ['IBLOCK_ID', 'ID', 'PROPERTY_PAGE_URL']
+            );
 
-        while ($arElement = $dbResult->Fetch()) {
-            if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
-                list($pageUrlFromProperty) = MiscHelper::nomalizeUrlPath($arElement['PROPERTY_PAGE_URL_VALUE']);
-                if ($pageUrlFromProperty === $pageUrl) {
-                    $elementId = $arElement['ID'];
-                    break;
+            while ($arElement = $dbResult->Fetch()) {
+                if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
+                    list($pageUrlFromProperty) = MiscHelper::nomalizeUrlPath($arElement['PROPERTY_PAGE_URL_VALUE']);
+                    if ($pageUrlFromProperty === $pageUrl) {
+                        $elementId = $arElement['ID'];
+                        break;
+                    }
                 }
             }
         }
@@ -418,6 +421,7 @@ class QuickFiltersIblock
         $result = [];
 
         $elementId = self::findByPageUrl($pageUrl);
+
         if (!empty($elementId)) {
             $arSelect = array_merge(
                 ['ID', 'IBLOCK_ID'],
@@ -437,35 +441,35 @@ class QuickFiltersIblock
             );
 
             if ($arElement = $dbResult->Fetch()) {
-                if (!empty($arElement['PAGE_URL_VALUE'])) {
-                    $result['PAGE_URL'] = $arElement['PAGE_URL_VALUE'];
+                if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
+                    $result['PAGE_URL'] = $arElement['PROPERTY_PAGE_URL_VALUE'];
                 }
-                if (!empty($arElement['CONTENT_URL_VALUE'])) {
-                    $result['CONTENT_URL'] = $arElement['CONTENT_URL_VALUE'];
+                if (!empty($arElement['PROPERTY_CONTENT_URL_VALUE'])) {
+                    $result['CONTENT_URL'] = $arElement['PROPERTY_CONTENT_URL_VALUE'];
                 }
-                if (!empty($arElement['META_H1_VALUE'])) {
-                    $result['META_H1'] = $arElement['META_H1_VALUE'];
+                if (!empty($arElement['PROPERTY_META_H1_VALUE'])) {
+                    $result['META_H1'] = $arElement['PROPERTY_META_H1_VALUE'];
                 }
-                if (!empty($arElement['META_TITLE_VALUE'])) {
-                    $result['META_TITLE'] = $arElement['META_TITLE_VALUE'];
+                if (!empty($arElement['PROPERTY_META_TITLE_VALUE'])) {
+                    $result['META_TITLE'] = $arElement['PROPERTY_META_TITLE_VALUE'];
                 }
-                if (!empty($arElement['META_KEYWORDS_VALUE'])) {
-                    $result['META_KEYWORDS'] = $arElement['META_KEYWORDS_VALUE'];
+                if (!empty($arElement['PROPERTY_META_KEYWORDS_VALUE'])) {
+                    $result['META_KEYWORDS'] = $arElement['PROPERTY_META_KEYWORDS_VALUE'];
                 }
-                if (!empty($arElement['META_DESCRIPTION_VALUE'])) {
-                    $result['META_DESCRIPTION'] = $arElement['META_DESCRIPTION_VALUE'];
+                if (!empty($arElement['PROPERTY_META_DESCRIPTION_VALUE'])) {
+                    $result['META_DESCRIPTION'] = $arElement['PROPERTY_META_DESCRIPTION_VALUE'];
                 }
-                if (!empty($arElement['META_CANONICAL_VALUE'])) {
-                    $result['META_CANONICAL'] = $arElement['META_CANONICAL_VALUE'];
+                if (!empty($arElement['PROPERTY_META_CANONICAL_VALUE'])) {
+                    $result['META_CANONICAL'] = $arElement['PROPERTY_META_CANONICAL_VALUE'];
                 }
-                if (!empty($arElement['HTTP_CODE_VALUE'])) {
-                    $result['HTTP_CODE'] = $arElement['HTTP_CODE_VALUE'];
+                if (!empty($arElement['PROPERTY_HTTP_CODE_VALUE'])) {
+                    $result['HTTP_CODE'] = $arElement['PROPERTY_HTTP_CODE_VALUE'];
                 }
-                if (!empty($arElement['BC_NAME_VALUE'])) {
-                    $result['BC_NAME'] = $arElement['BC_NAME_VALUE'];
+                if (!empty($arElement['PROPERTY_BC_NAME_VALUE'])) {
+                    $result['BC_NAME'] = $arElement['PROPERTY_BC_NAME_VALUE'];
                 }
-                if (!empty($arElement['IS_BC_LINK_VALUE'])) {
-                    $result['IS_BC_LINK'] = $arElement['IS_BC_LINK_VALUE'];
+                if (!empty($arElement['PROPERTY_IS_BC_LINK_VALUE'])) {
+                    $result['IS_BC_LINK'] = $arElement['PROPERTY_IS_BC_LINK_VALUE'];
                 }
             }
         }

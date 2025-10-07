@@ -41,7 +41,8 @@ class PageEvents
      */
     public static function checkQuickFilter(): void
     {
-        list($currentUrlPath) = MiscHelper::nomalizeUrlPath($_SERVER['REQUEST_URI']);
+        $fullCurUrl = MiscHelper::getFullCurUrl();
+        list($currentUrlPath) = MiscHelper::nomalizeUrlPath($fullCurUrl);
         $isQuickFilter = self::fillData($currentUrlPath);
 
         if ($isQuickFilter) {
@@ -101,20 +102,24 @@ class PageEvents
     private static function fillData(string $currentUrlPath): bool
     {
         $matchDatas = QuickFiltersIblock::getByPageUrl($currentUrlPath);
-        if (!empty($matchDatas)) {
-            self::$pageUrl = $matchDatas['PAGE_URL'] ?? '';
-            self::$contentUrl = $matchDatas['CONTENT_URL'] ?? '';
-            self::$metaH1 = $matchDatas['META_H1'] ?? '';
-            self::$metaTitle = $matchDatas['META_TITLE'] ?? '';
-            self::$metaKeywords = $matchDatas['META_KEYWORDS'] ?? '';
-            self::$metaDescription = $matchDatas['META_DESCRIPTION'] ?? '';
-            self::$metaCanonical = $matchDatas['META_CANONICAL'] ?? '';
-            self::$httpCode = $matchDatas['HTTP_CODE'] ?? '200';
-            self::$bc = $matchDatas['BC_NAME'] ?? '';
-            self::$isBcLink = ($matchDatas['IS_BC_LINK'] ?? '') === 'Y';
-            self::$isQuickFilter = true;
 
-            return true;
+        if (!empty($matchDatas)) {
+            $contentUrl = MiscHelper::nomalizeFullCurUrl($matchDatas['CONTENT_URL'] ?? '');
+            if (MiscHelper::checkUrl200($contentUrl) === true) {
+                self::$pageUrl = $matchDatas['PAGE_URL'] ?? '';
+                self::$contentUrl = $contentUrl;
+                self::$metaH1 = $matchDatas['META_H1'] ?? '';
+                self::$metaTitle = $matchDatas['META_TITLE'] ?? '';
+                self::$metaKeywords = $matchDatas['META_KEYWORDS'] ?? '';
+                self::$metaDescription = $matchDatas['META_DESCRIPTION'] ?? '';
+                self::$metaCanonical = $matchDatas['META_CANONICAL'] ?? '';
+                self::$httpCode = $matchDatas['HTTP_CODE'] ?? '200';
+                self::$bc = $matchDatas['BC_NAME'] ?? '';
+                self::$isBcLink = ($matchDatas['IS_BC_LINK'] ?? '') === 'Y';
+                self::$isQuickFilter = true;
+
+                return true;
+            }
         }
 
         return false;
