@@ -132,7 +132,7 @@ class UrlRewriteHelper
      *
      * @return void
      */
-    public static function saveDmqFilter(): void
+    public static function createDmqFilter(): void
     {
         $ruleFields = self::getDmqFilterRuleFields();
         self::save($ruleFields);

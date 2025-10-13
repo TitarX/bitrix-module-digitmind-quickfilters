@@ -7,6 +7,7 @@ use Bitrix\Main\ModuleManager;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\IO\Directory;
 use DigitMind\QuickFilters\Entities\QuickFiltersIblock;
+use DigitMind\QuickFilters\Helpers\UrlRewriteHelper;
 
 Loc::loadMessages(__FILE__);
 
@@ -75,6 +76,9 @@ class digitmind_quickfilters extends CModule
                     QuickFiltersIblock::createIblock();
                 }
 
+                // Создание правила в urlrewrite.php для резервного пути
+                UrlRewriteHelper::createDmqFilter();
+
                 $this->copyFiles($documentRoot);
                 $this->createDirectories($documentRoot);
 
@@ -111,6 +115,9 @@ class digitmind_quickfilters extends CModule
                 QuickFiltersIblock::deleteIblock();
                 QuickFiltersIblock::deleteIblockType();
             }
+
+            // Удаление правила в urlrewrite.php для резервного пути
+            UrlRewriteHelper::deleteDmqFilter();
 
             $this->deleteFiles();
             $this->deleteDirectories();
