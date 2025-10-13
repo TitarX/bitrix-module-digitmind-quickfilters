@@ -2,9 +2,13 @@
 
 $MESS['DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_BUTTON'] = 'Пересоздать инфоблок модуля';
 $MESS['DIGITMIND_QUICKFILTERS_RECREATE_IBLOCK_CONFIRM'] = 'Подтверждаете пересоздание инфоблока модуля';
-
 $MESS['DIGITMIND_QUICKFILTERS_MODULE_IBLOCK_RECREATED_SUCCESS'] = 'Инфоблок модуля успешно пересоздан';
 $MESS['DIGITMIND_QUICKFILTERS_MODULE_IBLOCK_RECREATED_FAIL'] = 'Не удалось пересоздать инфоблок модуля';
+
+$MESS['DIGITMIND_QUICKFILTERS_RECREATE_DMQFILTER_BUTTON'] = 'Пересоздать правило dmqfilter в URLRewrite';
+$MESS['DIGITMIND_QUICKFILTERS_RECREATE_DMQFILTER_CONFIRM'] = 'Подтверждаете пересоздание правила dmqfilter в URLRewrite';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_DMQFILTER_RECREATED_SUCCESS'] = 'Правило dmqfilter в URLRewrite успешно пересоздано';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_DMQFILTER_RECREATED_FAIL'] = 'Не удалось пересоздать правило dmqfilter в URLRewrite';
 
 $MESS['DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION'] = "<div style=\"margin: 20px 0; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;\">
     <b>Описание свойств инфоблока модуля:</b>
