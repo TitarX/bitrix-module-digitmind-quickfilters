@@ -437,4 +437,21 @@ class MiscHelper
 
         return $curHost . implode('', $urlPath);
     }
+
+    /**
+     * Добавление GET-параметра к URL
+     *
+     * @param string $url
+     * @param string $paramName
+     * @param string $paramValue
+     *
+     * @return string
+     */
+    public static function addGetParam(string $url, string $paramName, string $paramValue): string
+    {
+        // Проверяем наличие GET-параметров в URL
+        $separator = (str_contains($url, '?')) ? '&' : '?';
+
+        return $url . $separator . $paramName . '=' . $paramValue;
+    }
 }

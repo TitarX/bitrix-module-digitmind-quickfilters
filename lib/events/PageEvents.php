@@ -2,6 +2,7 @@
 
 namespace DigitMind\QuickFilters\Events;
 
+use Bitrix\Main\Application;
 use Bitrix\Main\Loader;
 use Bitrix\Main\LoaderException;
 use Bitrix\Main\Localization\Loc;
@@ -19,17 +20,7 @@ try {
 
 class PageEvents
 {
-    private static string $pageUrl = '';
-    private static string $contentUrl = '';
-    private static string $metaH1 = '';
-    private static string $metaTitle = '';
-    private static string $metaKeywords = '';
-    private static string $metaDescription = '';
-    private static string $metaCanonical = '';
-    private static string $httpCode = '';
-    private static string $bc = '';
-    private static bool $isBcLink = false;
-    private static bool $isQuickFilter = false;
+    private static string $dmqfIblockId = 'dmqf_iblock_id';
 
     /**
      * Обработчик события OnPageStart, начала исполняемого раздела пролога сайта
@@ -43,12 +34,21 @@ class PageEvents
     {
         $fullCurUrl = MiscHelper::getFullCurUrl();
         list($currentUrlPath) = MiscHelper::nomalizeUrlPath($fullCurUrl);
-        $isQuickFilter = self::fillData($currentUrlPath);
 
-        if ($isQuickFilter) {
-            CHTTP::SetStatus(self::$httpCode);
-            readfile(self::$contentUrl);
-            exit();
+        $currentUrlPathTrimmed = trim($currentUrlPath, '/');
+        if (!empty($currentUrlPathTrimmed)) {
+            $matchDatas = QuickFiltersIblock::getByPageUrl($currentUrlPath);
+            if (!empty($matchDatas['ID']) && !empty($matchDatas['CONTENT_URL'])) {
+                $contentUrl = MiscHelper::nomalizeFullCurUrl($matchDatas['CONTENT_URL']);
+                if (MiscHelper::checkUrl200($contentUrl) === true) {
+                    $httpCode = $matchDatas['HTTP_CODE'] ?? '200';
+                    $contentUrl = MiscHelper::addGetParam($contentUrl, self::$dmqfIblockId, $matchDatas['ID']);
+
+                    CHTTP::SetStatus($httpCode);
+                    readfile($contentUrl);
+                    exit();
+                }
+            }
         }
     }
 
@@ -63,85 +63,34 @@ class PageEvents
     {
         global $APPLICATION;
 
-        if (self::$isQuickFilter) {
-            if (!empty(self::$metaH1)) {
-                $APPLICATION->SetTitle(self::$metaH1); // h1
-            }
+        $dmqfIblockId = Application::getInstance()->getContext()->getRequest()->get('dmqf_iblock_id');
+        if (!empty($dmqfIblockId) && is_numeric($dmqfIblockId)) {
+            $elementProperties = QuickFiltersIblock::getElementById($dmqfIblockId);
+            if (!empty($elementProperties)) {
+                if (!empty($elementProperties['META_TITLE'])) {
+                    $APPLICATION->SetPageProperty('title', $elementProperties['META_TITLE']); // title
+                }
 
-            if (!empty(self::$metaTitle)) {
-                $APPLICATION->SetPageProperty('title', self::$metaTitle); // title
-            }
+                if (!empty($elementProperties['META_KEYWORDS'])) {
+                    $APPLICATION->SetPageProperty('keywords', $elementProperties['META_KEYWORDS']); // keywords
+                }
 
-            if (!empty(self::$metaKeywords)) {
-                $APPLICATION->SetPageProperty('keywords', self::$metaKeywords); // keywords
-            }
+                if (!empty($elementProperties['META_DESCRIPTION'])) {
+                    $APPLICATION->SetPageProperty('description', $elementProperties['META_DESCRIPTION']); // description
+                }
 
-            if (!empty(self::$metaDescription)) {
-                $APPLICATION->SetPageProperty('description', self::$metaDescription); // description
-            }
+                if (!empty($elementProperties['META_CANONICAL'])) {
+                    $APPLICATION->SetPageProperty('canonical', $elementProperties['META_CANONICAL']); // canonical
+                }
 
-            if (!empty(self::$metaCanonical)) {
-                $APPLICATION->SetPageProperty('canonical', self::$metaCanonical); // canonical
-            }
+                if (!empty($elementProperties['META_H1'])) {
+                    $APPLICATION->SetTitle($elementProperties['META_H1']); // h1
+                }
 
-            if (!empty(self::$bc)) {
-                $APPLICATION->AddChainItem(self::$bc, self::$isBcLink ? self::$pageUrl : ''); // breadcrumb
-            }
-        } else {
-            self::resetData();
-        }
-    }
-
-    /**
-     * Поиск элемента инфоблока, соответствующего текущему URL, и заполнение полей при нахождении
-     *
-     * @param string $currentUrlPath
-     *
-     * @return bool
-     */
-    private static function fillData(string $currentUrlPath): bool
-    {
-        $matchDatas = QuickFiltersIblock::getByPageUrl($currentUrlPath);
-
-        if (!empty($matchDatas)) {
-            $contentUrl = MiscHelper::nomalizeFullCurUrl($matchDatas['CONTENT_URL'] ?? '');
-            if (MiscHelper::checkUrl200($contentUrl) === true) {
-                self::$pageUrl = $matchDatas['PAGE_URL'] ?? '';
-                self::$contentUrl = $contentUrl;
-                self::$metaH1 = $matchDatas['META_H1'] ?? '';
-                self::$metaTitle = $matchDatas['META_TITLE'] ?? '';
-                self::$metaKeywords = $matchDatas['META_KEYWORDS'] ?? '';
-                self::$metaDescription = $matchDatas['META_DESCRIPTION'] ?? '';
-                self::$metaCanonical = $matchDatas['META_CANONICAL'] ?? '';
-                self::$httpCode = $matchDatas['HTTP_CODE'] ?? '200';
-                self::$bc = $matchDatas['BC_NAME'] ?? '';
-                self::$isBcLink = ($matchDatas['IS_BC_LINK'] ?? '') === 'Y';
-                self::$isQuickFilter = true;
-
-                return true;
+                if (!empty($elementProperties['BC_NAME'])) {
+                    $APPLICATION->AddChainItem($elementProperties['BC_NAME'], $elementProperties['PAGE_URL']); // breadcrumb
+                }
             }
         }
-
-        return false;
-    }
-
-    /**
-     * Сброс заполненных полей
-     *
-     * @return void
-     */
-    private static function resetData(): void
-    {
-        self::$pageUrl = '';
-        self::$contentUrl = '';
-        self::$metaH1 = '';
-        self::$metaTitle = '';
-        self::$metaKeywords = '';
-        self::$metaDescription = '';
-        self::$metaCanonical = '';
-        self::$httpCode = '';
-        self::$bc = '';
-        self::$isBcLink = false;
-        self::$isQuickFilter = false;
     }
 }

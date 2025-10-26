@@ -21,7 +21,6 @@ $MESS['DIGITMIND_QUICKFILTERS_FIELDS_DESCRIPTION'] = "<div style=\"margin: 20px 
         <li>Свойство <b>META_DESCRIPTION</b> (строка, необязательно) — Meta Description.</li>
         <li>Свойство <b>META_CANONICAL</b> (строка, необязательно) — Meta Canonical.</li>
         <li>Свойство <b>BC_NAME</b> (строка, необязательно) — Название пункта в цепочке навигации.</li>
-        <li>Свойство <b>IS_BC_LINK</b> (флажок, необязательно) — Пункт цепочки навигации в виде ссылки.</li>
         <li>Свойство <b>HTTP_CODE</b> (список, необязательно) — HTTP-код ответа (например, 200, 301, 404 и др).</li>
     </ul>
 </div>";

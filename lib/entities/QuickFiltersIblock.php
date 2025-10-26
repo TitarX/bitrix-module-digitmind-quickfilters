@@ -121,24 +121,6 @@ class QuickFiltersIblock
             ],
             [
                 'IBLOCK_ID' => $iblockId,
-                'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_IS_BC_LINK_NAME'),
-                'SORT' => '800',
-                'CODE' => 'IS_BC_LINK',
-                'PROPERTY_TYPE' => 'L',
-                'MULTIPLE' => 'N',
-                'IS_REQUIRED' => 'N',
-                'LIST_TYPE' => 'C',
-                'VALUES' => [
-                    [
-                        'VALUE' => 'Y',
-                        'DEF' => 'Y',
-                        'SORT' => 100,
-                        'XML_ID' => 'Y'
-                    ]
-                ]
-            ],
-            [
-                'IBLOCK_ID' => $iblockId,
                 'NAME' => Loc::getMessage('DIGITMIND_QUICKFILTERS_PROP_HTTP_CODE_NAME'),
                 'SORT' => '900',
                 'CODE' => 'HTTP_CODE',
@@ -410,7 +392,7 @@ class QuickFiltersIblock
     }
 
     /**
-     * Получение списка элементов инфоблока по значению свойства PAGE_URL
+     * Поиск элемента инфоблока по значению свойства PAGE_URL
      *
      * @param string $pageUrl
      *
@@ -441,35 +423,77 @@ class QuickFiltersIblock
             );
 
             if ($arElement = $dbResult->Fetch()) {
-                if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
-                    $result['PAGE_URL'] = $arElement['PROPERTY_PAGE_URL_VALUE'];
+                if (!empty($arElement['ID'])) {
+                    $result['ID'] = $arElement['ID'];
                 }
                 if (!empty($arElement['PROPERTY_CONTENT_URL_VALUE'])) {
-                    $result['CONTENT_URL'] = $arElement['PROPERTY_CONTENT_URL_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_META_H1_VALUE'])) {
-                    $result['META_H1'] = $arElement['PROPERTY_META_H1_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_META_TITLE_VALUE'])) {
-                    $result['META_TITLE'] = $arElement['PROPERTY_META_TITLE_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_META_KEYWORDS_VALUE'])) {
-                    $result['META_KEYWORDS'] = $arElement['PROPERTY_META_KEYWORDS_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_META_DESCRIPTION_VALUE'])) {
-                    $result['META_DESCRIPTION'] = $arElement['PROPERTY_META_DESCRIPTION_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_META_CANONICAL_VALUE'])) {
-                    $result['META_CANONICAL'] = $arElement['PROPERTY_META_CANONICAL_VALUE'];
+                    $result['CONTENT_URL'] = trim($arElement['PROPERTY_CONTENT_URL_VALUE']);
                 }
                 if (!empty($arElement['PROPERTY_HTTP_CODE_VALUE'])) {
-                    $result['HTTP_CODE'] = $arElement['PROPERTY_HTTP_CODE_VALUE'];
+                    $result['HTTP_CODE'] = trim($arElement['PROPERTY_HTTP_CODE_VALUE']);
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Получение полей и свойств элемента инфоблока по переданному ID элемента
+     *
+     * @param string|int $elementId
+     *
+     * @return array
+     */
+    public static function getElementById(string|int $elementId): array
+    {
+        $result = [];
+
+        if (!empty($elementId) && is_numeric($elementId)) {
+            $arSelect = array_merge(
+                ['ID', 'IBLOCK_ID'],
+                self::getIblockPropertyCodesForFilter()
+            );
+
+            $dbResult = CIBlockElement::GetList(
+                ['SORT' => 'ASC'],
+                [
+                    'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
+                    'IBLOCK_CODE' => self::IBLOCK_CODE,
+                    'ID' => $elementId
+                ],
+                false,
+                false,
+                $arSelect
+            );
+
+            if ($arElement = $dbResult->Fetch()) {
+                if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
+                    $result['PAGE_URL'] = trim($arElement['PROPERTY_PAGE_URL_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_CONTENT_URL_VALUE'])) {
+                    $result['CONTENT_URL'] = trim($arElement['PROPERTY_CONTENT_URL_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_META_H1_VALUE'])) {
+                    $result['META_H1'] = trim($arElement['PROPERTY_META_H1_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_META_TITLE_VALUE'])) {
+                    $result['META_TITLE'] = trim($arElement['PROPERTY_META_TITLE_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_META_KEYWORDS_VALUE'])) {
+                    $result['META_KEYWORDS'] = trim($arElement['PROPERTY_META_KEYWORDS_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_META_DESCRIPTION_VALUE'])) {
+                    $result['META_DESCRIPTION'] = trim($arElement['PROPERTY_META_DESCRIPTION_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_META_CANONICAL_VALUE'])) {
+                    $result['META_CANONICAL'] = trim($arElement['PROPERTY_META_CANONICAL_VALUE']);
+                }
+                if (!empty($arElement['PROPERTY_HTTP_CODE_VALUE'])) {
+                    $result['HTTP_CODE'] = trim($arElement['PROPERTY_HTTP_CODE_VALUE']);
                 }
                 if (!empty($arElement['PROPERTY_BC_NAME_VALUE'])) {
-                    $result['BC_NAME'] = $arElement['PROPERTY_BC_NAME_VALUE'];
-                }
-                if (!empty($arElement['PROPERTY_IS_BC_LINK_VALUE'])) {
-                    $result['IS_BC_LINK'] = $arElement['PROPERTY_IS_BC_LINK_VALUE'];
+                    $result['BC_NAME'] = trim($arElement['PROPERTY_BC_NAME_VALUE']);
                 }
             }
         }
