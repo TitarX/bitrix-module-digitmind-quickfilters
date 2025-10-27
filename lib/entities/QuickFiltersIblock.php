@@ -362,14 +362,14 @@ class QuickFiltersIblock
     {
         $elementId = '';
 
-        $pageUrlTrim = trim($pageUrl, '/');
-        if (!empty($pageUrlTrim)) {
+        $pageUrlTrimmed = trim($pageUrl, '/');
+        if (!empty($pageUrlTrimmed)) {
             $dbResult = CIBlockElement::GetList(
                 ['SORT' => 'ASC'],
                 [
                     'IBLOCK_TYPE' => self::IBLOCK_TYPE_ID,
                     'IBLOCK_CODE' => self::IBLOCK_CODE,
-                    'PROPERTY_PAGE_URL' => '%' . $pageUrlTrim . '%',
+                    'PROPERTY_PAGE_URL' => '%' . $pageUrlTrimmed . '%',
                     'ACTIVE' => 'Y'
                 ],
                 false,
