@@ -397,6 +397,8 @@ class MiscHelper
             $firstSlashPos = strpos($work, '/');
             if ($firstSlashPos !== false) {
                 $path = substr($work, $firstSlashPos);
+            } else {
+                $path = $work;
             }
         } else {
             // Уже путь
