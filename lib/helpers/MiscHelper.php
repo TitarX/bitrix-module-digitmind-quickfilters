@@ -395,8 +395,8 @@ class MiscHelper
         } elseif ($work !== '' && $work[0] !== '/' && preg_match('#^[a-z0-9.-]+(?::\d+)?(?:/|$)#i', $work)) {
             // Похоже на домен без схемы: example.com или example.com/path
             $firstSlashPos = strpos($work, '/');
-            if ($firstSlashPos !== false) {
-                $isDomainName = true;
+            if ($firstSlashPos !== false && is_numeric($firstSlashPos)) {
+                $isDomainName = self::isDomainName(substr($work, 0, $firstSlashPos));
                 if ($isDomainName) {
                     $path = substr($work, $firstSlashPos);
                 }
@@ -462,6 +462,60 @@ class MiscHelper
 
     public static function isDomainName(string $text): bool
     {
+        // Проверяем, что строка не пустая
+        if (empty(trim($text))) {
+            return false;
+        }
 
+        // Удаляем пробелы
+        $text = trim($text);
+
+        // Проверяем длину (максимум 253 символа для полного доменного имени)
+        if (strlen($text) > 253) {
+            return false;
+        }
+
+        // Проверяем, что домен не начинается и не заканчивается точкой или дефисом
+        if (preg_match('/^[.-]|[.-]$/', $text)) {
+            return false;
+        }
+
+        // Разбиваем на части по точкам
+        $parts = explode('.', $text);
+
+        // Должно быть минимум 2 части (например: example.com)
+        if (count($parts) < 2) {
+            return false;
+        }
+
+        foreach ($parts as $part) {
+            // Проверяем, что часть не пустая
+            if (empty($part)) {
+                return false;
+            }
+
+            // Проверяем длину части (максимум 63 символа)
+            if (strlen($part) > 63) {
+                return false;
+            }
+
+            // Проверяем, что часть не начинается и не заканчивается дефисом
+            if (preg_match('/^-|-$/', $part)) {
+                return false;
+            }
+
+            // Проверяем, что часть содержит только допустимые символы (буквы, цифры, дефис)
+            if (!preg_match('/^[a-zA-Z0-9-]+$/', $part)) {
+                return false;
+            }
+        }
+
+        // Проверяем, что последняя часть (TLD) содержит только буквы и имеет длину минимум 2 символа
+        $lastPart = end($parts);
+        if (!preg_match('/^[a-zA-Z]{2,}$/', $lastPart)) {
+            return false;
+        }
+
+        return true;
     }
 }
