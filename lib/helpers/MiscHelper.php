@@ -399,6 +399,8 @@ class MiscHelper
                 $isDomainName = self::isDomainName(substr($work, 0, $firstSlashPos));
                 if ($isDomainName) {
                     $path = substr($work, $firstSlashPos);
+                } else {
+                    $path = $work;
                 }
             } else {
                 $path = $work;
@@ -473,6 +475,39 @@ class MiscHelper
         // Проверяем длину (максимум 253 символа для полного доменного имени)
         if (strlen($text) > 253) {
             return false;
+        }
+
+        // Проверяем на файловые расширения
+        $fileExtensions = [
+            'php',
+            'html',
+            'htm',
+            'js',
+            'css',
+            'txt',
+            'xml',
+            'json',
+            'pdf',
+            'doc',
+            'docx',
+            'xls',
+            'xlsx',
+            'png',
+            'jpg',
+            'jpeg',
+            'gif',
+            'svg',
+            'ico',
+            'zip',
+            'rar',
+            '7z',
+            'tar',
+            'gz'
+        ];
+        foreach ($fileExtensions as $extension) {
+            if (preg_match('/\.' . preg_quote($extension, '/') . '$/i', $text)) {
+                return false;
+            }
         }
 
         // Проверяем, что домен не начинается и не заканчивается точкой или дефисом
