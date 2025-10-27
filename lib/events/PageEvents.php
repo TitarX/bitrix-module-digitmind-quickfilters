@@ -33,7 +33,7 @@ class PageEvents
     public static function checkQuickFilter(): void
     {
         $fullCurUrl = MiscHelper::getFullCurUrl();
-        list($currentUrlPath) = MiscHelper::nomalizeUrlPath($fullCurUrl);
+        list($currentUrlPath) = MiscHelper::nomalizeUrlPath($fullCurUrl, true);
 
         $currentUrlPathTrimmed = trim($currentUrlPath, '/');
         if (!empty($currentUrlPathTrimmed)) {

@@ -379,7 +379,7 @@ class QuickFiltersIblock
 
             while ($arElement = $dbResult->Fetch()) {
                 if (!empty($arElement['PROPERTY_PAGE_URL_VALUE'])) {
-                    list($pageUrlFromProperty) = MiscHelper::nomalizeUrlPath($arElement['PROPERTY_PAGE_URL_VALUE']);
+                    list($pageUrlFromProperty) = MiscHelper::nomalizeUrlPath($arElement['PROPERTY_PAGE_URL_VALUE'], true);
                     if ($pageUrlFromProperty === $pageUrl) {
                         $elementId = $arElement['ID'];
                         break;

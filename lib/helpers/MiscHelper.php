@@ -352,10 +352,11 @@ class MiscHelper
      * 5: Добавление начального слеша, если его нет
      *
      * @param string $url
+     * @param bool $doTrimEndSlash
      *
      * @return array
      */
-    public static function nomalizeUrlPath(string $url): array
+    public static function nomalizeUrlPath(string $url, bool $doTrimEndSlash = false): array
     {
         // Сохраняем query-параметры, обрабатываем только путь.
         $raw = trim($url);
@@ -413,12 +414,14 @@ class MiscHelper
         // Исправление множественных слэшей
         $path = preg_replace('#/+#', '/', $path);
 
-        // Удаление завершающего сегмента index.php (с необязательным завершающим слэшем)
-        $path = preg_replace('#(?i)(?:^|/)index\.php/?$#', '', $path);
+        if ($doTrimEndSlash) {
+            // Удаление завершающего сегмента index.php (с необязательным завершающим слэшем)
+            $path = preg_replace('#(?i)(?:^|/)index\.php/?$#', '', $path);
 
-        // Удаление конечного слэша (кроме корня)
-        if ($path !== '/') {
-            $path = rtrim($path, '/');
+            // Удаление конечного слэша (кроме корня)
+            if ($path !== '/') {
+                $path = rtrim($path, '/');
+            }
         }
 
         // Добавление начального слэша, если его нет
@@ -462,6 +465,13 @@ class MiscHelper
         return $url . $separator . $paramName . '=' . $paramValue;
     }
 
+    /**
+     * Проверка строки на соответствие доменному имени
+     *
+     * @param string $text
+     *
+     * @return bool
+     */
     public static function isDomainName(string $text): bool
     {
         // Проверяем, что строка не пустая
