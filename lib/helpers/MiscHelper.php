@@ -396,7 +396,10 @@ class MiscHelper
             // Похоже на домен без схемы: example.com или example.com/path
             $firstSlashPos = strpos($work, '/');
             if ($firstSlashPos !== false) {
-                $path = substr($work, $firstSlashPos);
+                $isDomainName = true;
+                if ($isDomainName) {
+                    $path = substr($work, $firstSlashPos);
+                }
             } else {
                 $path = $work;
             }
@@ -455,5 +458,10 @@ class MiscHelper
         $separator = (str_contains($url, '?')) ? '&' : '?';
 
         return $url . $separator . $paramName . '=' . $paramValue;
+    }
+
+    public static function isDomainName(string $text): bool
+    {
+
     }
 }
