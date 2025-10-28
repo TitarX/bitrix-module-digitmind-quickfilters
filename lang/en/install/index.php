@@ -1,10 +1,10 @@
 <?php
 
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_NAME'] = 'Быстрые фильтры';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_DESCRIPTION'] = 'Быстрые фильтры';
-$MESS['DIGITMIND_QUICKFILTERS_RIGHT_DENIED'] = 'Доступ запрещён';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_IBLOCK'] = 'Модуль не установлен. Для работы модуля необходим модуль "Информационные блоки"';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_INSTALL'] = 'Установка модуля "Быстрые фильтры"';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_INSTALL_DONE'] = 'Установка модуля "Быстрые фильтры" завершена';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL'] = 'Удаление модуля "Быстрые фильтры"';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_DONE'] = 'Удаление модуля "Быстрые фильтры" завершено';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_NAME'] = 'Quick Filters';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_DESCRIPTION'] = 'Quick Filters';
+$MESS['DIGITMIND_QUICKFILTERS_RIGHT_DENIED'] = 'Access denied';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_NOT_INSTALLED_IBLOCK'] = 'The module is not installed. The "Information Blocks" module is required for operation';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_INSTALL'] = 'Installing the "Quick Filters" module';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_INSTALL_DONE'] = 'Installation of the "Quick Filters" module completed';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL'] = 'Uninstalling the "Quick Filters" module';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_DONE'] = 'Uninstallation of the "Quick Filters" module completed';

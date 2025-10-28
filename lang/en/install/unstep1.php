@@ -1,4 +1,4 @@
 <?php
 
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_NEXT'] = 'Продолжить';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_DELETE_IBLOCK'] = 'Удалить инфоблок "Быстрые фильтры" и его тип';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALL_NEXT'] = 'Continue';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_DELETE_IBLOCK'] = 'Delete the "Quick Filters" iblock and its type';

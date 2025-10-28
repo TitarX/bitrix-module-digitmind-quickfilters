@@ -2,11 +2,11 @@
 
 use DigitMind\QuickFilters\Entities\QuickFiltersIblock;
 
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_FAIL'] = 'Модуль не удалён';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_BACK_TO_LIST'] = 'Вернуться к списку решений';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_FAIL'] = 'The module has not been uninstalled';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_BACK_TO_LIST'] = 'Back to the solutions list';
 
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS'] = 'Модуль удалён';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_DET'] = 'Модуль "Быстрые фильтры" успешно удалён';
-$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_IBLOCK_LINK'] = 'Если инфоблок модуля не удалён автоматически во время удаления модуля, его можно будет удалить в <a href="'
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS'] = 'The module has been uninstalled';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_DET'] = 'The "Quick Filters" module has been successfully uninstalled';
+$MESS['DIGITMIND_QUICKFILTERS_MODULE_UNINSTALLED_SUCCESS_IBLOCK_LINK'] = 'If the module\'s iblock was not removed automatically during uninstallation, it can be deleted in the <a href="'
     . QuickFiltersIblock::getIblockTypeUrl()
-    . '">разделе типа инфоблока</a>';
+    . '">iblock type section</a>';
